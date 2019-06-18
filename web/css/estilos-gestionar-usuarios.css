@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css?family=Cookie');
+@import url('https://fonts.googleapis.com/css?family=Kaushan+Script');
+@import url('https://fonts.googleapis.com/css?family=KoHo');
+@import url('https://fonts.googleapis.com/css?family=Slabo+27px');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Niramit');
+
+*{
+	box-sizing: border-box;
+	padding: 0px;
+	margin:0px;
+}
+.borde{
+	/*border:1px solid black;*/
+}
+body{
+    font-family: 'Niramit', sans-serif;
+	background-color: #81CCC1;
+    color: #B370B3;
+}
+h1 {
+    color: #FFF6D4;
+    -webkit-text-stroke: 1px #B370B3;
+    text-shadow:
+        3px 3px #B370B3,
+        -1px -1px 0 #B370B3,  
+        1px -1px 0 #B370B3,
+        -1px 1px 0 #B370B3,
+        1px 1px 0 #B370B3;
+    -webkit-text-stroke-width: 1px;
+}
+.container {
+    max-width: 100%;
+}
+.titulo {
+    text-align: center;
+    padding-top: 100px;
+}
+.tabla {
+    padding-left: 100px;
+    padding-right: 100px;
+}
+.busqueda{
+    padding-left: 150px;
+    padding-bottom: 10px;
+}
+th i{
+    font-size: 0.7em;
+}
+th i:hover {
+    color: #888;
+}
+th{
+    color: #444;
+}
+td{
+    color: #FFF;
+}
+.search:hover {
+    color: #888;
+}
+.thead-flowersx {
+    background-color: #79B3AA;
+}
+.container{
+    padding-top: 200px;
+}
+
+    
