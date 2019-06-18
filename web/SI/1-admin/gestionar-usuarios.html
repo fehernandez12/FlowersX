@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Gestionar usuarios</title>
+	<link rel="stylesheet" href="../../css/bootstrap.css">
+	<link rel="stylesheet" href="../../css/all.min.css">
+	<link rel="stylesheet" href="../../css/brands.css">
+	<link rel="stylesheet" href="../../css/estilos-paginas.css">
+	<link rel="stylesheet" href="../../css/estilos-gestionar-usuarios.css">
+</head>
+<body>
+	<div data-spy="scroll" data-target="#" data-offset="0" class="container">
+		<div class="titulo row">
+			<div class="col">
+				<h1>Usuarios</h1>
+				<p>Para ver más información, haz clic en el ícono <i class="fas fa-search"></i></p>
+			</div>
+		</div>
+		<div class="row">
+			<form class="busqueda form-inline my-2 my-lg-0">
+				<input class="form-control mr-sm-2" type="search" placeholder="Buscar por ID..." aria-label="Search">
+				<button class="btn-formulario btn my-2 my-sm-0" type="submit">Buscar</button>
+				<button class="btn-formulario btn my-2 my-sm-0" type="submit">Búsqueda avanzada</button>
+			</form>
+		</div>
+		<div class="row">
+			<div class="col tabla">
+				<table class="table table-striped table-hover">
+					<thead class="thead-flowersx">
+						<tr>
+							<th scope="col"></th>
+							<th scope="col">ID<i class="fas fa-filter"></i></th>
+							<th scope="col">Nombre del titular <i class="fas fa-filter"></i></th>
+							<th scope="col">Razón Social <i class="fas fa-filter"></i></th>
+							<th scope="col">E-mail <i class="fas fa-filter"></i></th>
+							<th scope="col">País <i class="fas fa-filter"></i></th>
+							<th scope="col">Ciudad <i class="fas fa-filter"></i></th>
+							<th scope="col">Cargo <i class="fas fa-filter"></i></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row"><i class="search fas fa-search" data-toggle="modal" data-target="#verUsuario"></i></th>
+							<td>123456</td>
+							<td>Marc Jacobs</td>
+							<td>Walmart Inc.</td>
+							<td>mjacobs@walmart.com</td>
+							<td>Estados Unidos</td>
+							<td>New York, NY</td>
+							<td>Cliente</td>
+						</tr>
+						<tr>
+							<th scope="row"><i class="search fas fa-search"></i></th>
+							<td>346545</td>
+							<td>Gianni Versace</td>
+							<td>Best Buy LLC</td>
+							<td>gversace1@bestbuy.com</td>
+							<td>Estados Unidos</td>
+							<td>Atlanta, GE</td>
+							<td>Cliente</td>
+						</tr>
+						<tr>
+							<th scope="row"><i class="search fas fa-search"></i></th>
+							<td>314159</td>
+							<td>Felipe Hernández</td>
+							<td>FlowersX</td>
+							<td>admin@flowersx.com</td>
+							<td>Colombia</td>
+							<td>Bogotá, DC</td>
+							<td>Administrador</td>
+						</tr>
+						<tr>
+							<th scope="row"><i class="search fas fa-search"></i></th>
+							<td>654345</td>
+							<td>Rudolph Giuliani</td>
+							<td>Target Inc.</td>
+							<td>chairman@target.com</td>
+							<td>Estados Unidos</td>
+							<td>Washington, DC</td>
+							<td>Cliente</td>
+						</tr>
+						<tr>
+							<th scope="row"><i class="search fas fa-search"></i></th>
+							<td>684251</td>
+							<td>Juan Pablo Rodríguez</td>
+							<td>FlowersX</td>
+							<td>jprodriguez@flowersx.com</td>
+							<td>Colombia</td>
+							<td>Bogotá, DC</td>
+							<td>Supervisor de Siembra</td>
+						</tr>
+						<tr>
+							<th scope="row"><i class="search fas fa-search"></i></th>
+							<td>584589</td>
+							<td>Jerson Chitán</td>
+							<td>FlowersX</td>
+							<td>jachitan@flowersx.com</td>
+							<td>Colombia</td>
+							<td>Bogotá, DC</td>
+							<td>Ingeniero de Siembra</td>
+						</tr>
+						<tr>
+							<th scope="row"><i class="search fas fa-search"></i></th>
+							<td>136548</td>
+							<td>Jonathan Patiño</td>
+							<td>FlowersX</td>
+							<td>japatino@flowersx.com</td>
+							<td>Colombia</td>
+							<td>Bogotá, DC</td>
+							<td>Vendedor</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<form class="busqueda form-inline my-2 my-lg-0">
+				<a href="crear-usuario.html"><button class="btn-formulario btn my-2 my-sm-0">Crear usuario</button></a>
+				<button class="btn-formulario btn my-2 my-sm-0" type="submit">Búsqueda avanzada</button>
+			</form>
+		</div>
+		<div class=" modal-info-usuarios modal fade" id="verUsuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Información de usuario</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<form>
+							<div class="form-group row">
+								<label for="staticEmail" class="col-sm-6 col-form-label">ID de Usuario:</label>
+								<div class="col-sm-6">
+									<input type="text" readonly class="form-control-plaintext" id="" value="123456">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="staticEmail" class="col-sm-6 col-form-label">Nombre del titular::</label>
+								<div class="col-sm-6">
+									<input type="text" readonly class="form-control-plaintext" id="" value="Marc Jacobs">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="staticEmail" class="col-sm-6 col-form-label">Razón Social:</label>
+								<div class="col-sm-6">
+									<input type="text" readonly class="form-control-plaintext" id="" value="Walmart Inc.">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="staticEmail" class="col-sm-6 col-form-label">E-mail:</label>
+								<div class="col-sm-6">
+									<input type="text" readonly class="form-control-plaintext" id="" value="mjacobs@walmart.com">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="staticEmail" class="col-sm-6 col-form-label">País:</label>
+								<div class="col-sm-6">
+									<input type="text" readonly class="form-control-plaintext" id="" value="Estados Unidos">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="staticEmail" class="col-sm-6 col-form-label">Ciudad:</label>
+								<div class="col-sm-6">
+									<input type="text" readonly class="form-control-plaintext" id="" value="Nueva York, NY">
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="staticEmail" class="col-sm-6 col-form-label">Rol:</label>
+								<div class="col-sm-6">
+									<input type="text" readonly class="form-control-plaintext" id="" value="Cliente">
+								</div>
+							</div>
+							<div class="form-group row">
+								<button type="button" class="btn-formulario btn my-2 my-sm-0">Editar usuario</button>
+								<button type="button" class="btn-formulario btn my-2 my-sm-0">Eliminar usuario</button>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn-formulario btn my-2 my-sm-0" data-dismiss="modal">Cerrar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="../../js/popper.min.js"></script>
+	<script src="../../js/jquery.min.js"></script>
+	<script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/admin.js"></script>
+	<script src="../../js/main.js"></script>
+</body>
+</html>

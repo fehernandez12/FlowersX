@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Crear Usuario</title>
+	<link rel="stylesheet" href="../../css/bootstrap.css">
+	<link rel="stylesheet" href="../../css/all.min.css">
+	<link rel="stylesheet" href="../../css/brands.css">
+	<link rel="stylesheet" href="../../css/estilos-paginas.css">
+	<link rel="stylesheet" href="../../css/estilos-crear-usuario.css">
+</head>
+<body>
+	<div data-spy="scroll" data-target="#" data-offset="0" class="container">
+		<div class="titulo row">
+			<div class="col">
+				<h1>Crear Usuario</h1>
+				<p>Por favor llena los siguientes datos. Los campos requeridos están marcados con un asterisco (*).</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<form class="formulario needs-validation" novalidate>
+					<div class="form-row">
+						<div class="col-md-4 mb-3">
+							<label for="validationCustom01">Nombre del titular</label>
+							<input type="text" class="form-control" id="validationCustom01" placeholder="Titular" required>
+							<div class="valid-feedback">
+								¡Se ve bien!
+							</div>
+						</div>
+						<div class="col-md-4 mb-3">
+							<label for="validationCustom02">Razón Social</label>
+							<input type="text" class="form-control" id="validationCustom02" placeholder="Razón Social" required>
+							<div class="valid-feedback">
+								¡Se ve bien!
+							</div>
+						</div>
+						<div class="col-md-4 mb-3">
+							<label for="validationCustomUsername">Dirección de e-mail</label>
+							<div class="input-group">
+								<input type="text" class="form-control" id="validationCustomUsername" placeholder="E-mail" aria-describedby="inputGroupPrepend" required>
+								<div class="invalid-feedback">
+									Por favor ingresa una dirección válida.
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="form-row">
+						<div class="col-md-3 mb-3">
+							<label for="validationCustom03">Ciudad</label>
+							<input type="text" class="form-control" id="validationCustom03" placeholder="Ciudad" required>
+							<div class="invalid-feedback">
+								Ingresa una ciudad válida.
+							</div>
+						</div>
+						<div class="col-md-3 mb-3">
+							<label for="validationCustom04">Estado</label>
+							<input type="text" class="form-control" id="validationCustom04" placeholder="Estado" required>
+							<div class="invalid-feedback">
+								Ingresa un estado válido.
+							</div>
+						</div>
+						<div class="col-md-3 mb-3">
+							<label for="validationCustom05">Código postal</label>
+							<input type="text" class="form-control" id="validationCustom05" placeholder="Código postal" required>
+							<div class="invalid-feedback">
+								Ingresa un código postal válido.
+							</div>
+						</div>
+						<div class="col-md-3 mb-3">
+							<label for="validationCustom03">Cargo</label>
+							<select class="form-control">
+								<option>Supervisor de Siembra</option>
+								<option>Ingeniero de Siembra</option>
+								<option>Vendedor</option>
+								<option>Cliente</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+							<label class="form-check-label" for="invalidCheck">
+								Enviar correo de confirmación
+							</label>
+							<div class="invalid-feedback">
+								Debes marcar esta casilla antes de continuar.
+							</div>
+						</div>
+					</div>
+					<button class="btn boton-registro" type="submit">Crear usuario</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<script src="../../js/popper.min.js"></script>
+    <script src="../../js/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+	<script src="../../js/main.js"></script>
+	<script src="../../js/formularios.js"></script>
+</body>
+</html>
