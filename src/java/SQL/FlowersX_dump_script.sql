@@ -320,3 +320,5 @@ BEGIN
 SET new.password := AES_DECRYPT(new.password, 'flowersx');
 END;
 //
+
+DROP TRIGGER IF EXISTS 
