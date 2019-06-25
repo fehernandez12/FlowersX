@@ -31,10 +31,6 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         super(Usuario.class);
     }
     
-    public UsuarioFacade() {
-        super(Usuario.class);
-    }
-    
     public Usuario login (Usuario usuario) {
         Usuario usuarioLogin = null;
         try {
