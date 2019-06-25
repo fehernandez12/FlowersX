@@ -1,7 +1,8 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <meta charset="UTF-8"></meta>
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"></meta>
@@ -212,41 +213,27 @@
             </div>
         </div>
         <!-- Modales -->
-        <div class="modal fade" id="exampleModal1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <!-- <a type="button" class="close" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </a> -->
+        <div class="modal fade" id="modal-login" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Ingresar</h5>
-                        <!-- <a type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </a> -->
                     </div>
                     <div class="modal-body">
                         <h:form class="needs-validation">
-                            <div class="form-group">
-                                <label for="exampleInputEmail1">Dirección de email</label>
-                                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email"></input>
-                                <div class="invalid-feedback">
-                                    Por favor ingresa una dirección válida.
+                            <f:view>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Dirección de email</label>
+                                    <h:inputText class="form-control" id="txtCorreo" value="#{usuarioControlador.usuario.email}"></h:inputText>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"></input>
-                                <div class="invalid-feedback">
-                                    Password incorrecta.
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Password</label>
+                                    <h:inputText class="form-control" id="txtCorreo" value="#{usuarioControlador.usuario.password}"></h:inputText>
                                 </div>
-                            </div>
-                            <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1"></input>
-                                <label class="form-check-label" for="exampleCheck1">Recordarme</label>
-                            </div>
-                            <hr class="my-12"></hr>
+                                <hr class="my-12"></hr>
+                            </f:view>
                             <div class="form-group">
-                                <h:commandButton action="#" class="btn btn-forms" value="Ingresar"></h:commandButton>
+                                <h:commandButton action="#{usuarioControlador.validarLogin()}" class="btn btn-forms" value="Ingresar"></h:commandButton>
                             </div>
                         </h:form>
                     </div>
