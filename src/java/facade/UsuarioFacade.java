@@ -6,9 +6,11 @@
 package facade;
 
 import entidades.Usuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -27,6 +29,26 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
 
     public UsuarioFacade() {
         super(Usuario.class);
+    }
+    
+    public UsuarioFacade() {
+        super(Usuario.class);
+    }
+    
+    public Usuario login (Usuario usuario) {
+        Usuario usuarioLogin = null;
+        try {
+            Query query = em.createQuery("SELECT u from usuario where u.email=?1 and u.password=AES_DECRYPT(?2,'flowersx')");
+            query.setParameter(1, usuario.getEmail());
+            query.setParameter(2, usuario.getPassword());
+            List<Usuario> lista = query.getResultList();
+            if (!lista.isEmpty()) {
+                usuarioLogin = lista.get(0);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return usuarioLogin;
     }
     
 }
