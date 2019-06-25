@@ -321,4 +321,6 @@ SET new.password := AES_DECRYPT(new.password, 'flowersx');
 END;
 //
 
-DROP TRIGGER IF EXISTS 
+DROP PROCEDURE IF EXISTS `P_encriptar_password`
+DELIMITER //
+CREATE PROCEDURE `P_encriptar_password`
