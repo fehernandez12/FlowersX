@@ -14,6 +14,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -75,6 +76,41 @@ public class UsuarioControlador implements Serializable {
     public void eliminarCiudad(Usuario usuario) {
         usuarioFacade.remove(usuario);
         //return "Lista";
+    }
+    
+    public String validarLogin () {
+        String redireccionar = "";
+        try {
+            Usuario usuarioLogueado = usuarioFacade.login(usuario);
+            if (usuarioLogueado != null) {
+                System.out.println("usuarioLogueado" + usuarioLogueado.getTitular());
+                FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("sesionLogin", usuarioLogueado);
+                switch (usuarioLogueado.getRolidRol().getIdRol()) {
+                    case 1:
+                        redireccionar = "SI/1-admin/index-admin";
+                        break;
+                    case 2:
+                        redireccionar = "SI/2-supervisor/index-supervisor";
+                        break;
+                    case 3:
+                        redireccionar = "SI/3-ingeniero/index-ingeniero";
+                        break;
+                    case 4:
+                        redireccionar = "SI/4-vendedor/index-vendedor";
+                        break; 
+                    case 5:
+                        redireccionar = "SI/5-cliente/index-cliente";
+                        break;
+                    default:
+                        throw new AssertionError();
+                }
+            } else {
+                redireccionar = "index";
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return redireccionar;
     }
     
 }
