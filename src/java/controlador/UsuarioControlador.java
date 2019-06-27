@@ -66,16 +66,19 @@ public class UsuarioControlador implements Serializable {
         return "gestionar-usuarios";
     }
 
-    public void preEditarUsuario(Usuario usuario) {
+    public String preEditarUsuario(Usuario usuario) {
         this.usuario = usuario;
+        return "editar-usuario";
     }
 
-    public void editarUsuario() {
+    public String editarUsuario() {
+        usuario.setRolidRol(rolFacade.find(rol.getIdRol()));
         usuarioFacade.edit(usuario);
         usuario = new Usuario();
+        return "gestionar-usuarios";
     }
 
-    public void eliminarCiudad(Usuario usuario) {
+    public void eliminarUsuario(Usuario usuario) {
         usuarioFacade.remove(usuario);
         //return "Lista";
     }

@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <meta charset="UTF-8"></meta>
         <title>Gestionar usuarios</title>
@@ -14,6 +15,7 @@
         <link rel="stylesheet" href="../../css/estilos-gestionar-usuarios.css"></link>
     </h:head>
     <h:body>
+        <h:outputStylesheet name="../../css/bootstrap.css" />
         <div data-spy="scroll" data-target="#" data-offset="0" class="container">
             <div class="row">
                 <div class="col tabla">
@@ -25,59 +27,63 @@
 
 
                             <h:form>
-                                <h1><h:outputText value="List"/></h1>
-                                <p:dataTable value="#{usuarioControlador.consultarUsuario()}" var="item">
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Id"/>
+                                <h:dataTable class="table table-hover table-bordered" value="#{usuarioControlador.consultarUsuario()}" var="item">
+                                    <h:column>
+                                        <f:facet class="header" name="header">
+                                            <h:outputText value="Id" />
                                         </f:facet>
                                         <h:outputText value="#{item.id}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet class="header" name="header">
                                             <h:outputText value="Titular"/>
                                         </f:facet>
                                         <h:outputText value="#{item.titular}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet class="header" name="header">
                                             <h:outputText value="RazonSocial"/>
                                         </f:facet>
                                         <h:outputText value="#{item.razonSocial}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet class="header" name="header">
                                             <h:outputText value="Email"/>
                                         </f:facet>
                                         <h:outputText value="#{item.email}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet class="header" name="header">
                                             <h:outputText value="Pais"/>
                                         </f:facet>
                                         <h:outputText value="#{item.pais}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet class="header" name="header">
                                             <h:outputText value="Ciudad"/>
                                         </f:facet>
                                         <h:outputText value="#{item.ciudad}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Password"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet class="header" name="header">
+                                            <h:outputText value="Rol"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.password}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="RolidRol"/>
+                                        <h:outputText value="#{item.rolidRol.nombre}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet class="header" name="header">
+                                            <h:outputText value="Rol"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.rolidRol}"/>
-                                    </p:column>
-                                </p:dataTable>
+                                        <h:commandLink class="opciones-tabla" action="#{usuarioControlador.preEditarUsuario(item)}" onclick="return confirm('¿Estás seguro?')"><i class="fas fa-pen" data-toggle="modal" data-target="#modalEditar"></i></h:commandLink>
+                                        <h:commandLink class="opciones-tabla" action="#{usuarioControlador.eliminarUsuario(item)}" onclick="return confirm('¿Estás seguro?')"><i class="fas fa-trash-alt"></i></h:commandLink>
+                                    </h:column>
+                                </h:dataTable>
                             </h:form>
                         </f:view>
+                        <a href="crear-usuario.xhtml"><button type="button" class="boton-salir btn" data-toggle="tooltip" data-placement="bottom" title="Cerrar sesión y salir">
+                                Crear usuario
+                            </button>  
+                        </a> 
                     </f:view>
                 </div>
             </div>
