@@ -5,23 +5,20 @@
  */
 package controlador;
 
-import facade.RolFacade;
-import facade.UsuarioFacade;
 import entidades.Rol;
 import entidades.Usuario;
+import facade.RolFacade;
+import facade.UsuarioFacade;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
-import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 
 /**
  *
- * @author Aprendiz
+ * @author Guillermo
  */
 @Named(value = "usuarioControlador")
 @SessionScoped
@@ -30,6 +27,9 @@ public class UsuarioControlador implements Serializable {
     /**
      * Creates a new instance of UsuarioControlador
      */
+    public UsuarioControlador() {
+    }
+    
     @EJB
     UsuarioFacade usuarioFacade;
     Usuario usuario = new Usuario();
@@ -37,8 +37,6 @@ public class UsuarioControlador implements Serializable {
     RolFacade rolFacade;
     Rol rol = new Rol();
     
-    public UsuarioControlador() {
-    }
 
     public Usuario getUsuario() {
         return usuario;
@@ -80,8 +78,8 @@ public class UsuarioControlador implements Serializable {
         usuarioFacade.remove(usuario);
         //return "Lista";
     }
-    
-    public String validarLogin () {
+
+public String validarLogin () {
         String redireccionar = "";
         try {
             Usuario usuarioLogueado = usuarioFacade.login(usuario);

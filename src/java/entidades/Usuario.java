@@ -6,9 +6,7 @@
 package entidades;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,20 +14,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Aprendiz
+ * @author Guillermo
  */
 @Entity
 @Table(name = "usuario")
@@ -41,7 +36,8 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByRazonSocial", query = "SELECT u FROM Usuario u WHERE u.razonSocial = :razonSocial")
     , @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")
     , @NamedQuery(name = "Usuario.findByPais", query = "SELECT u FROM Usuario u WHERE u.pais = :pais")
-    , @NamedQuery(name = "Usuario.findByCiudad", query = "SELECT u FROM Usuario u WHERE u.ciudad = :ciudad")})
+    , @NamedQuery(name = "Usuario.findByCiudad", query = "SELECT u FROM Usuario u WHERE u.ciudad = :ciudad")
+    , @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password")})
 public class Usuario implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -78,17 +74,9 @@ public class Usuario implements Serializable {
     private String ciudad;
     @Basic(optional = false)
     @NotNull
-    @Lob
+    @Size(min = 1, max = 45)
     @Column(name = "password")
-    private byte[] password;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioid", fetch = FetchType.LAZY)
-    private List<Novedad> novedadList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioid", fetch = FetchType.LAZY)
-    private List<OrdenProduccion> ordenProduccionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioid", fetch = FetchType.LAZY)
-    private List<Solicitud> solicitudList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioid", fetch = FetchType.LAZY)
-    private List<Pedido> pedidoList;
+    private String password;
     @JoinColumn(name = "Rol_idRol", referencedColumnName = "idRol")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Rol rolidRol;
@@ -100,7 +88,7 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public Usuario(Integer id, String titular, String razonSocial, String email, String pais, String ciudad, byte[] password) {
+    public Usuario(Integer id, String titular, String razonSocial, String email, String pais, String ciudad, String password) {
         this.id = id;
         this.titular = titular;
         this.razonSocial = razonSocial;
@@ -158,48 +146,12 @@ public class Usuario implements Serializable {
         this.ciudad = ciudad;
     }
 
-    public byte[] getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(byte[] password) {
+    public void setPassword(String password) {
         this.password = password;
-    }
-
-    @XmlTransient
-    public List<Novedad> getNovedadList() {
-        return novedadList;
-    }
-
-    public void setNovedadList(List<Novedad> novedadList) {
-        this.novedadList = novedadList;
-    }
-
-    @XmlTransient
-    public List<OrdenProduccion> getOrdenProduccionList() {
-        return ordenProduccionList;
-    }
-
-    public void setOrdenProduccionList(List<OrdenProduccion> ordenProduccionList) {
-        this.ordenProduccionList = ordenProduccionList;
-    }
-
-    @XmlTransient
-    public List<Solicitud> getSolicitudList() {
-        return solicitudList;
-    }
-
-    public void setSolicitudList(List<Solicitud> solicitudList) {
-        this.solicitudList = solicitudList;
-    }
-
-    @XmlTransient
-    public List<Pedido> getPedidoList() {
-        return pedidoList;
-    }
-
-    public void setPedidoList(List<Pedido> pedidoList) {
-        this.pedidoList = pedidoList;
     }
 
     public Rol getRolidRol() {

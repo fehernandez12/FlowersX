@@ -15,7 +15,7 @@ import utilidades.AES;
 
 /**
  *
- * @author Aprendiz
+ * @author Guillermo
  */
 @Stateless
 public class UsuarioFacade extends AbstractFacade<Usuario> {
@@ -36,7 +36,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         Usuario usuarioLogin = null;
         AES aes = new AES();
         try {
-            Query query = em.createQuery("SELECT u from usuario where u.email=?1 and u.password=AES_ENCRYPT(?2,'flowersx')");
+            Query query = em.createQuery("SELECT u from usuario where u.email=?1 and u.password=?2");
             query.setParameter(1, usuario.getEmail());
             query.setParameter(2, usuario.getPassword());
             List<Usuario> lista = query.getResultList();
