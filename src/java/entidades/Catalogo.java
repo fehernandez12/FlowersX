@@ -46,18 +46,12 @@ public class Catalogo implements Serializable {
     @Column(name = "idCatalogo")
     private Integer idCatalogo;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "nombreProducto")
     private String nombreProducto;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "descripcion")
     private String descripcion;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "tiempoDeCultivo")
     private String tiempoDeCultivo;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "catalogoidCatalogo", fetch = FetchType.LAZY)

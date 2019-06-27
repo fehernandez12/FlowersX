@@ -52,23 +52,18 @@ public class Pedido implements Serializable {
     @Column(name = "idPedido")
     private Integer idPedido;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "fechaDeCreacion")
     @Temporal(TemporalType.DATE)
     private Date fechaDeCreacion;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "fechaDeEnvio")
     @Temporal(TemporalType.DATE)
     private Date fechaDeEnvio;
     @Basic(optional = false)
-    @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
     @Column(name = "direccionDeEnvio")
     private String direccionDeEnvio;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "monto")
     private int monto;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidoidPedido", fetch = FetchType.LAZY)

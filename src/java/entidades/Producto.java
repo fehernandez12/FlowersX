@@ -43,25 +43,18 @@ public class Producto implements Serializable {
     @Column(name = "idProducto")
     private Integer idProducto;
     @Basic(optional = false)
-    @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
     @Column(name = "producto")
     private String producto;
     @Basic(optional = false)
-    @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
     @Column(name = "descripcion")
     private String descripcion;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "precio")
     private int precio;
     @Basic(optional = false)
-    @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
     @Column(name = "estado")
     private String estado;
     @JoinColumn(name = "Catalogo_idCatalogo", referencedColumnName = "idCatalogo")

@@ -52,28 +52,21 @@ public class OrdenProduccion implements Serializable {
     @Column(name = "idOrdenDeProduccion")
     private Integer idOrdenDeProduccion;
     @Basic(optional = false)
-    @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
     @Column(name = "descipcionArreglo")
     private String descipcionArreglo;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "cantidad")
     private int cantidad;
     @Basic(optional = false)
-    @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
     @Column(name = "estado")
     private String estado;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "fechainicio")
     @Temporal(TemporalType.DATE)
     private Date fechainicio;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "fechaFin")
     @Temporal(TemporalType.DATE)
     private Date fechaFin;

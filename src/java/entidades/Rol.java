@@ -38,8 +38,6 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Rol implements Serializable {
 
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "nombre")
     private String nombre;
 
