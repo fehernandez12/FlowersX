@@ -14,7 +14,9 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import org.primefaces.event.RowEditEvent;
 
 /**
  *
@@ -29,14 +31,13 @@ public class UsuarioControlador implements Serializable {
      */
     public UsuarioControlador() {
     }
-    
+
     @EJB
     UsuarioFacade usuarioFacade;
     Usuario usuario = new Usuario();
     @EJB
     RolFacade rolFacade;
     Rol rol = new Rol();
-    
 
     public Usuario getUsuario() {
         return usuario;
@@ -53,33 +54,33 @@ public class UsuarioControlador implements Serializable {
     public void setRol(Rol rol) {
         this.rol = rol;
     }
-    
+
     public List<Usuario> consultarUsuario() {
         return usuarioFacade.findAll();
     }
-    
+
     public String crearUsuario() {
         usuario.setRolidRol(rolFacade.find(rol.getIdRol()));
         usuarioFacade.create(usuario);
         usuario = new Usuario();
         return "gestionar-usuarios";
     }
-    
+
     public void preEditarUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
+
     public void editarUsuario() {
         usuarioFacade.edit(usuario);
         usuario = new Usuario();
     }
-    
+
     public void eliminarCiudad(Usuario usuario) {
         usuarioFacade.remove(usuario);
         //return "Lista";
     }
 
-public String validarLogin () {
+    public String validarLogin() {
         String redireccionar = "";
         try {
             Usuario usuarioLogueado = usuarioFacade.login(usuario);
@@ -98,7 +99,7 @@ public String validarLogin () {
                         break;
                     case 4:
                         redireccionar = "SI/4-vendedor/index-vendedor";
-                        break; 
+                        break;
                     case 5:
                         redireccionar = "SI/5-cliente/index-cliente";
                         break;
@@ -113,5 +114,5 @@ public String validarLogin () {
         }
         return redireccionar;
     }
-    
+
 }

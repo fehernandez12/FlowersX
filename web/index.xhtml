@@ -59,7 +59,7 @@
                             <h:form class="form-inline my-2 my-lg-0">
                                 <f:view>
                                         <h:inputText class="form-control mr-sm-2" pt:placeholder="Dirección de e-mail" id="txtCorreo" value="#{usuarioControlador.usuario.email}"></h:inputText>
-                                        <h:inputText class="form-control mr-sm-2" pt:placeholder="Password" id="txtPassword" value="#{usuarioControlador.usuario.password}"></h:inputText>                      
+                                        <h:inputText pt:type="password" class="form-control mr-sm-2" pt:placeholder="Password" id="txtPassword" value="#{usuarioControlador.usuario.password}"></h:inputText>                      
                                         <h:commandButton action="#{usuarioControlador.validarLogin()}" class="btn boton-ingreso" value="Ingresar"></h:commandButton>
                                 </f:view>
                             </h:form>

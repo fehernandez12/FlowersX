@@ -18,57 +18,66 @@
             <div class="row">
                 <div class="col tabla">
                     <f:view>
-                        <h:form>
-                            <div class="col">
-                                <h1><h:outputText value="Usuarios"/></h1>
-                            </div>
+                        <div class="col">
+                            <h1><h:outputText value="Usuarios"/></h1>
+                        </div>
+                        <f:view>
 
-                            <p:dataTable value="#{usuarioControlador.consultarUsuario()}" var="item" paginator="true"
-                 paginatorTemplate="{FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Id"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.id}"/>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Titular"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.titular}"/>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="RazonSocial"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.razonSocial}"/>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Email"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.email}"/>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Pais"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.pais}"/>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Ciudad"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.ciudad}"/>
-                                </h:column>
-                                <h:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="RolidRol"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.rolidRol}"/>
-                                </h:column>
-                            </p:dataTable>
-                        </h:form>
+
+                            <h:form>
+                                <h1><h:outputText value="List"/></h1>
+                                <p:dataTable value="#{usuarioControlador.consultarUsuario()}" var="item">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Id"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.id}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Titular"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.titular}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="RazonSocial"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.razonSocial}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Email"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.email}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Pais"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.pais}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Ciudad"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.ciudad}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Password"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.password}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="RolidRol"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.rolidRol}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:form>
+                        </f:view>
                     </f:view>
                 </div>
             </div>

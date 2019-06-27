@@ -40,16 +40,19 @@
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col-md-4 mb-4">
+                            <div class="col-md-3 mb-3">
                                 <label for="validationCustom03">País</label>
                                 <h:inputText value="#{usuarioControlador.usuario.pais}" class="form-control"></h:inputText>
                             </div>
-                            <div class="col-md-4 mb-4">
+                            <div class="col-md-3 mb-3">
                                 <label for="validationCustom04">Ciudad</label>
                                 <h:inputText value="#{usuarioControlador.usuario.ciudad}" class="form-control"></h:inputText>
                             </div>
-
-                            <div class="dropdown col-md-4 mb-4">
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom04">Password</label>
+                                <h:inputText value="#{usuarioControlador.usuario.password}" class="form-control"></h:inputText>
+                            </div>
+                            <div class="dropdown col-md-3 mb-3">
                                 <label for="validationCustom03">Cargo</label>
                                 <br />
                                 <h:selectOneMenu class="btn btn-secondary dropdown-toggle" value="#{usuarioControlador.rol.idRol}">

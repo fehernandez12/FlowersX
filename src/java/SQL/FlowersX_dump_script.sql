@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.16, for Win64 (x86_64)
 --
--- Host: localhost    Database: flowerx
+-- Host: 127.0.0.1    Database: flowerx
 -- ------------------------------------------------------
 -- Server version	8.0.16
 
@@ -208,7 +208,7 @@ CREATE TABLE `rol` (
   `idRol` int(5) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   PRIMARY KEY (`idRol`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -217,6 +217,7 @@ CREATE TABLE `rol` (
 
 LOCK TABLES `rol` WRITE;
 /*!40000 ALTER TABLE `rol` DISABLE KEYS */;
+INSERT INTO `rol` VALUES (1,'Administrador'),(2,'Ingeniero de siembra'),(3,'Vendedor'),(4,'Cliente');
 /*!40000 ALTER TABLE `rol` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,7 +266,7 @@ CREATE TABLE `usuario` (
   `email` varchar(45) NOT NULL,
   `pais` varchar(45) NOT NULL,
   `ciudad` varchar(45) NOT NULL,
-  `password` blob NOT NULL,
+  `password` varchar(45) NOT NULL,
   `Rol_idRol` int(5) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_Usuario_Rol_idx` (`Rol_idRol`),
@@ -281,14 +282,6 @@ LOCK TABLES `usuario` WRITE;
 /*!40000 ALTER TABLE `usuario` DISABLE KEYS */;
 /*!40000 ALTER TABLE `usuario` ENABLE KEYS */;
 UNLOCK TABLES;
-
---
--- Dumping events for database 'flowerx'
---
-
---
--- Dumping routines for database 'flowerx'
---
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -299,7 +292,8 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-17  6:38:26
+-- Dump completed on 2019-06-26 22:01:59
+
 
 -- Triggers: Tabla usuario
 
