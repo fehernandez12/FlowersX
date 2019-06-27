@@ -1,13 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controlador;
 
+import entidades.Catalogo;
+import facade.CatalogoFacade;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 
 /**
  *
@@ -17,10 +18,47 @@ import java.io.Serializable;
 @SessionScoped
 public class CatalogoControlador implements Serializable {
 
-    /**
-     * Creates a new instance of CatalogoControlador
-     */
-    public CatalogoControlador() {
+    @EJB
+    CatalogoFacade catalogoFacade;
+    Catalogo catalogo = new Catalogo();
+    @PostConstruct
+    public void init() {
+        catalogo = new Catalogo();
     }
-    
+
+public CatalogoControlador() {
+    }
+
+    public Catalogo getCatalogo() {
+        return catalogo;
+    }
+
+    public void setCatalogo(Catalogo catalogo) {
+        this.catalogo = catalogo;
+    }
+
+    public List<Catalogo> consultarCatalogo() {
+        return catalogoFacade.findAll();
+    }
+
+    public String crearCatalogo() {
+        catalogoFacade.create(catalogo);
+        this.catalogo = new Catalogo();
+        return "gestionar-catalogos";
+    }
+
+    public void preEditarCatalogo(Catalogo catalogo) {
+        this.catalogo = catalogo;
+    }
+
+    public void editarCatalogo() {
+        catalogoFacade.edit(catalogo);
+        catalogo = new Catalogo();
+    }
+
+    public void eliminarCatalogo(Catalogo catalogo) {
+        catalogoFacade.remove(catalogo);
+        //return "Lista";
+    }
+
 }
