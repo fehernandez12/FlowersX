@@ -88,23 +88,23 @@ public class UsuarioControlador implements Serializable {
         try {
             Usuario usuarioLogueado = usuarioFacade.login(usuario);
             if (usuarioLogueado != null) {
-                System.out.println("usuarioLogueado" + usuarioLogueado.getTitular());
+                System.out.println("Usuario Logueado: " + usuarioLogueado.getTitular());
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("sesionLogin", usuarioLogueado);
                 switch (usuarioLogueado.getRolidRol().getIdRol()) {
                     case 1:
-                        redireccionar = "SI/1-admin/index-admin";
+                        redireccionar = "SI/1-admin/index-admin.xhtml";
                         break;
                     case 2:
-                        redireccionar = "SI/2-supervisor/index-supervisor";
+                        redireccionar = "SI/2-supervisor/index-supervisor.xhtml";
                         break;
                     case 3:
-                        redireccionar = "SI/3-ingeniero/index-ingeniero";
+                        redireccionar = "SI/3-ingeniero/index-ingeniero.xhtml";
                         break;
                     case 4:
-                        redireccionar = "SI/4-vendedor/index-vendedor";
+                        redireccionar = "SI/4-vendedor/index-vendedor.xhtml";
                         break;
                     case 5:
-                        redireccionar = "SI/5-cliente/index-cliente";
+                        redireccionar = "SI/5-cliente/index-cliente.xhtml";
                         break;
                     default:
                         throw new AssertionError();
