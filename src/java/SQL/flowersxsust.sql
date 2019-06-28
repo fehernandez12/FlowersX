@@ -153,7 +153,7 @@ CREATE TABLE `pedido` (
   PRIMARY KEY (`idPedido`),
   KEY `fk_Pedido_Usuario1_idx` (`Usuario_id`),
   CONSTRAINT `fk_Pedido_Usuario1` FOREIGN KEY (`Usuario_id`) REFERENCES `usuario` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -162,6 +162,7 @@ CREATE TABLE `pedido` (
 
 LOCK TABLES `pedido` WRITE;
 /*!40000 ALTER TABLE `pedido` DISABLE KEYS */;
+INSERT INTO `pedido` VALUES (1,'2019-06-28','2019-08-16','1600 PENNSYLVANIA AVENUE, WASHINGTON DC, ESTADOS UNIDOS',15000,10),(2,'2019-06-28','2019-10-11','3640 34TH STREET, NUEVA YORK NY, ESTADOS UNIDOS',25000,10),(3,'2019-03-20','2019-06-28','1750 WASHINGTON AVENUE, MIAMI FL, ESTADOS UNIDOS',30000,10);
 /*!40000 ALTER TABLE `pedido` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -240,7 +241,7 @@ CREATE TABLE `solicitud` (
   KEY `fk_Solicitud_Usuario1_idx` (`Usuario_id`),
   CONSTRAINT `fk_Solicitud_Pedido1` FOREIGN KEY (`Pedido_idPedido`) REFERENCES `pedido` (`idPedido`),
   CONSTRAINT `fk_Solicitud_Usuario1` FOREIGN KEY (`Usuario_id`) REFERENCES `usuario` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -249,6 +250,7 @@ CREATE TABLE `solicitud` (
 
 LOCK TABLES `solicitud` WRITE;
 /*!40000 ALTER TABLE `solicitud` DISABLE KEYS */;
+INSERT INTO `solicitud` VALUES (1,'2019-06-28','Solicitud de envío de pedido con ID 3 a la dirección 1750 WASHINGTON AVENUE, MIAMI, FL, en Estados Unidos\r\n\r\nNúmero de vuelo: AV985\r\n\r\n','transporte@santamartaflowers.com',3,1);
 /*!40000 ALTER TABLE `solicitud` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -293,4 +295,39 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-06-28  6:53:44
+-- Dump completed on 2019-06-28  7:21:03
+
+CREATE USER 'felipe'@'localhost' IDENTIFIED BY 'hernandez';
+GRANT all privileges ON flowersx.usuario TO 'felipe'@'localhost';
+GRANT all privileges ON flowersx.solicitud TO 'felipe'@'localhost';
+
+CREATE USER 'juan'@'localhost' IDENTIFIED BY 'rodriguez';
+GRANT all privileges ON flowersx.pedido TO 'juan'@'localhost';
+GRANT all privileges ON flowersx.producto TO 'juan'@'localhost';
+GRANT all privileges ON flowersx.ordendeproduccion TO 'juan'@'localhost';
+GRANT all privileges ON flowersx.pedido TO 'juan'@'localhost';
+
+CREATE USER 'jerson'@'localhost' IDENTIFIED BY 'chitan';
+GRANT all privileges ON flowersx.catalogo TO 'jerson'@'localhost';
+GRANT all privileges ON flowersx.novedad TO 'jerson'@'localhost';
+
+CREATE USER 'flowersxadmin'@'localhost' IDENTIFIED BY 'flowersx';
+GRANT ALL PRIVILEGES ON flowersx.* TO 'flowersxadmin'@'localhost';
+
+DROP TRIGGER IF EXISTS `T_encriptar_contrasena`;
+DELIMITER //
+CREATE TRIGGER `T_encriptar_contrasena`
+BEFORE CREATE ON usuario FOR EACH ROW
+BEGIN
+SET new.password := AES_ENCRYPT(new.password, 'flowersx');
+END;
+//
+
+DROP TRIGGER IF EXISTS `T_desencriptar_contrasena`;
+DELIMITER //
+CREATE TRIGGER `T_desencriptar_contrasena`
+BEFORE UPDATE ON usuario FOR EACH ROW
+BEGIN
+SET new.password := AES_DECRYPT(new.password, 'flowersx');
+END;
+//
