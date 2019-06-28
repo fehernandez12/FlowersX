@@ -35,6 +35,7 @@ public class UsuarioControlador implements Serializable {
     @EJB
     UsuarioFacade usuarioFacade;
     Usuario usuario = new Usuario();
+    private List<Usuario> listaUsuarios;
     @EJB
     RolFacade rolFacade;
     Rol rol = new Rol();
@@ -116,6 +117,14 @@ public class UsuarioControlador implements Serializable {
             System.out.println("Error: " + e.getMessage());
         }
         return redireccionar;
+    }
+    
+    public List<Usuario> getListaUsuarios() {
+        return listaUsuarios;
+    }
+ 
+    public void setListaSolicitudes(List<Usuario> listaUsuarios) {
+        this.listaUsuarios = listaUsuarios;
     }
 
 }

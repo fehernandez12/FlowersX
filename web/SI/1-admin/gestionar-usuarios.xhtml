@@ -27,57 +27,66 @@
 
 
                             <h:form>
-                                <h:dataTable id="tablaUsuarios" class="table table-hover table-bordered" value="#{usuarioControlador.consultarUsuario()}" var="item">
-                                    <h:column>
+                                <p:dataTable id="tablaUsuarios" class="table table-hover table-bordered" value="#{usuarioControlador.consultarUsuario()}" var="item" widgetVar="usuariosTabla"
+                 emptyMessage="No se han encontrado usuarios con los criterios dados." filteredValue="#{usuarioControlados.listaUsuarios}">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <p:outputPanel>
+                                                <h:outputText value="Buscar:" />
+                                                <p:inputText id="globalFilter" onkeyup="PF('usuariosTabla').filter()" style="width:150px" placeholder=""/>
+                                            </p:outputPanel>
+                                        </f:facet>
+                                    </p:column>
+                                    <p:column>
                                         <f:facet class="header" name="header">
                                             <h:outputText value="Id" />
                                         </f:facet>
                                         <h:outputText value="#{item.id}"/>
-                                    </h:column>
-                                    <h:column>
+                                    </p:column>
+                                    <p:column>
                                         <f:facet class="header" name="header">
                                             <h:outputText value="Titular"/>
                                         </f:facet>
                                         <h:outputText value="#{item.titular}"/>
-                                    </h:column>
-                                    <h:column>
+                                    </p:column>
+                                    <p:column>
                                         <f:facet class="header" name="header">
                                             <h:outputText value="RazonSocial"/>
                                         </f:facet>
                                         <h:outputText value="#{item.razonSocial}"/>
-                                    </h:column>
-                                    <h:column>
+                                    </p:column>
+                                    <p:column>
                                         <f:facet class="header" name="header">
                                             <h:outputText value="Email"/>
                                         </f:facet>
                                         <h:outputText value="#{item.email}"/>
-                                    </h:column>
-                                    <h:column>
+                                    </p:column>
+                                    <p:column>
                                         <f:facet class="header" name="header">
                                             <h:outputText value="Pais"/>
                                         </f:facet>
                                         <h:outputText value="#{item.pais}"/>
-                                    </h:column>
-                                    <h:column>
+                                    </p:column>
+                                    <p:column>
                                         <f:facet class="header" name="header">
                                             <h:outputText value="Ciudad"/>
                                         </f:facet>
                                         <h:outputText value="#{item.ciudad}"/>
-                                    </h:column>
-                                    <h:column>
+                                    </p:column>
+                                    <p:column>
                                         <f:facet class="header" name="header">
                                             <h:outputText value="Rol"/>
                                         </f:facet>
                                         <h:outputText value="#{item.rolidRol.nombre}"/>
-                                    </h:column>
-                                    <h:column>
+                                    </p:column>
+                                    <p:column>
                                         <f:facet class="header" name="header">
-                                            <h:outputText value="Rol"/>
+                                            <h:outputText value="Opciones"/>
                                         </f:facet>
                                         <h:commandLink class="opciones-tabla" action="#{usuarioControlador.preEditarUsuario(item)}" onclick="return confirm('¿Estás seguro?')"><i class="fas fa-pen" data-toggle="modal" data-target="#modalEditar"></i></h:commandLink>
                                         <h:commandLink class="opciones-tabla" action="#{usuarioControlador.eliminarUsuario(item)}" onclick="return confirm('¿Estás seguro?')"><i class="fas fa-trash-alt"></i></h:commandLink>
-                                    </h:column>
-                                </h:dataTable>
+                                    </p:column>
+                                </p:dataTable>
                                 <h3>Exportar datos a Microsoft Excel</h3>
                                 <h:commandLink>
                                     <p:graphicImage name="images/excel.png" style="width:50px"/>

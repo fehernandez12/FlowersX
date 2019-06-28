@@ -31,12 +31,14 @@ public class SolicitudControlador implements Serializable {
     @EJB
     SolicitudFacade solicitudFacade;
     Solicitud solicitud = new Solicitud();
+    private List<Solicitud> listaSolicitudes;
     @EJB
     PedidoFacade pedidoFacade;
     Pedido pedido = new Pedido();
     @EJB
     UsuarioFacade usuarioFacade;
     Usuario usuario = new Usuario();
+    
     
     public SolicitudControlador() {
     }
@@ -92,6 +94,14 @@ public class SolicitudControlador implements Serializable {
     
     public void eliminarSolicitud(Solicitud solicitud) {
         solicitudFacade.remove(solicitud);
+    }
+    
+    public List<Solicitud> getListaSolicitudes() {
+        return listaSolicitudes;
+    }
+ 
+    public void setListaSolicitudes(List<Solicitud> listaSolicitudes) {
+        this.listaSolicitudes = listaSolicitudes;
     }
     
 }
