@@ -95,17 +95,14 @@ public class UsuarioControlador implements Serializable {
                     case 1:
                         redireccionar = "SI/1-admin/index-admin.xhtml";
                         break;
-                    case 2:
-                        redireccionar = "SI/2-supervisor/index-supervisor.xhtml";
-                        break;
                     case 3:
-                        redireccionar = "SI/3-ingeniero/index-ingeniero.xhtml";
+                        redireccionar = "SI/2-ingeniero/index-ingeniero.xhtml";
                         break;
                     case 4:
-                        redireccionar = "SI/4-vendedor/index-vendedor.xhtml";
+                        redireccionar = "SI/3-vendedor/index-vendedor.xhtml";
                         break;
                     case 5:
-                        redireccionar = "SI/5-cliente/index-cliente.xhtml";
+                        redireccionar = "SI/4-cliente/index-cliente.xhtml";
                         break;
                     default:
                         throw new AssertionError();
