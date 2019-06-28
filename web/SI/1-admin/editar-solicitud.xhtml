@@ -3,10 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <meta charset="UTF-8"></meta>
-        <title>Crear Usuario</title>
+        <title>Crear Solicitud</title>
         <link rel="stylesheet" href="../../css/bootstrap.css"></link>
         <link rel="stylesheet" href="../../css/all.min.css"></link>
         <link rel="stylesheet" href="../../css/brands.css"></link>
@@ -17,7 +17,7 @@
         <div data-spy="scroll" data-target="#" data-offset="0" class="container">
             <div class="titulo row">
                 <div class="col">
-                    <h1>Editar Usuario</h1>
+                    <h1>Editar Solicitud</h1>
                     <p>Por favor llena los siguientes datos.</p>
                 </div>
             </div>
@@ -27,45 +27,39 @@
                         <div class="form-row">
                             <div class="col-md-1 mb-1">
                                 <label for="validationCustom01">ID</label>
-                                <h:inputText value="#{usuarioControlador.usuario.id}" id="idUsuario" class="form-control"></h:inputText>
-                            </div>
-                            <div class="col-md-4 mb-4">
-                                <label for="validationCustom01">Nombre del titular</label>
-                                <h:inputText value="#{usuarioControlador.usuario.titular}" id="nombreTitular" class="form-control"></h:inputText>
+                                <h:inputText value="#{solicitudControlador.solicitud.idSolicitud}" id="idUsuario" class="form-control"></h:inputText>
                             </div>
                             <div class="col-md-3 mb-3">
-                                <label for="validationCustom02">Razón Social</label>
-                                <h:inputText value="#{usuarioControlador.usuario.razonSocial}" id="razonSocial" class="form-control"></h:inputText>
-                            </div>
-                            <div class="col-md-4 mb-4">
-                                <label for="validationCustomUsername">Dirección de e-mail</label>
-                                <div class="input-group">
-                                    <h:inputText value="#{usuarioControlador.usuario.email}" id="email" class="form-control"></h:inputText>
-                                </div>
+                                <label for="validationCustom01">Fecha</label>
+                                <h:inputText pt:type="date" value="#{solicitudControlador.solicitud.fecha}" id="nombreTitular" class="form-control">
+                                    <f:convertDateTime pattern="yyyy-MM-dd" />
+                                </h:inputText>
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col-md-3 mb-3">
-                                <label for="validationCustom03">País</label>
-                                <h:inputText value="#{usuarioControlador.usuario.pais}" class="form-control"></h:inputText>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="validationCustom04">Ciudad</label>
-                                <h:inputText value="#{usuarioControlador.usuario.ciudad}" class="form-control"></h:inputText>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="validationCustom04">Password</label>
-                                <h:inputText value="#{usuarioControlador.usuario.password}" class="form-control"></h:inputText>
-                            </div>
-                            <div class="dropdown col-md-3 mb-3">
-                                <label for="validationCustom03">Cargo</label>
+                            <div class="col">
+                                <label for="validationCustom02">Contenido</label>
+                                <h:inputTextarea class="form-control" rows="10" cols="50" value="#{solicitudControlador.solicitud.contenido}"/>
                                 <br />
-                                <h:selectOneMenu class="btn btn-secondary dropdown-toggle" value="#{usuarioControlador.rol.idRol}">
-                                    <f:selectItems class="dropdown-item" value="#{rolControlador.listar()}" var="rol" itemValue="#{rol.idRol}" itemLabel="#{rol.nombre}"/>
-                                </h:selectOneMenu>
                             </div>
                         </div>
-                        <h:commandButton action="#{usuarioControlador.editarUsuario()}" class="btn boton-registro" type="submit" value="Editar usuario"></h:commandButton>
+                        <div class="form-row">
+                            <div class="col-md-8 mb-8">
+                                <label for="validationCustomUsername">Destinatario</label>
+                                <div class="input-group">
+                                    <h:inputText value="#{solicitudControlador.solicitud.destinatario}" id="email" class="form-control"></h:inputText>
+                                </div>
+                            </div>
+                            <div class="col-md-2 mb-2">
+                                <label for="validationCustom04">Pedido</label>
+                                <h:inputText value="#{solicitudControlador.pedido.idPedido}" class="form-control"></h:inputText>
+                            </div>
+                            <div class="col-md-2 mb-2">
+                                <label for="validationCustom04">Usuario</label>
+                                <h:inputText value="#{solicitudControlador.usuario.id}" class="form-control"></h:inputText>
+                            </div>
+                        </div>
+                        <h:commandButton action="#{solicitudControlador.crearSolicitud()}" class="btn boton-registro" type="submit" value="Registrar cambios"></h:commandButton>
                     </h:form>
                 </div>
             </div>
@@ -77,6 +71,4 @@
         <script src="../../js/formularios.js"></script>
     </h:body>
 </html>
-
-
 

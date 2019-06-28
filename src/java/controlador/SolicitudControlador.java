@@ -90,7 +90,7 @@ public class SolicitudControlador implements Serializable {
         return "gestionar-solicitudes.xhtml";
     }
     
-    public void eliminarSolicitud() {
+    public void eliminarSolicitud(Solicitud solicitud) {
         solicitudFacade.remove(solicitud);
     }
     

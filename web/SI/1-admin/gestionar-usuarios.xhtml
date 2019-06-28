@@ -27,7 +27,7 @@
 
 
                             <h:form>
-                                <h:dataTable class="table table-hover table-bordered" value="#{usuarioControlador.consultarUsuario()}" var="item">
+                                <h:dataTable id="tablaUsuarios" class="table table-hover table-bordered" value="#{usuarioControlador.consultarUsuario()}" var="item">
                                     <h:column>
                                         <f:facet class="header" name="header">
                                             <h:outputText value="Id" />
@@ -78,6 +78,11 @@
                                         <h:commandLink class="opciones-tabla" action="#{usuarioControlador.eliminarUsuario(item)}" onclick="return confirm('¿Estás seguro?')"><i class="fas fa-trash-alt"></i></h:commandLink>
                                     </h:column>
                                 </h:dataTable>
+                                <h3>Exportar datos a Microsoft Excel</h3>
+                                <h:commandLink>
+                                    <p:graphicImage name="images/excel.png" style="width:50px"/>
+                                    <p:dataExporter type="xls" target="tablaUsuarios" fileName="Usuarios" pageOnly="true"/>
+                                </h:commandLink>
                             </h:form>
                         </f:view>
                         <a href="crear-usuario.xhtml"><button type="button" class="boton-salir btn" data-toggle="tooltip" data-placement="bottom" title="Cerrar sesión y salir">

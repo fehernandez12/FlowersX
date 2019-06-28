@@ -4,10 +4,10 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <meta charset="UTF-8"></meta>
-        <title>Gestionar usuarios</title>
+        <title>Gestionar solicitudes</title>
         <link rel="stylesheet" href="../../css/bootstrap.css"></link>
         <link rel="stylesheet" href="../../css/all.min.css"></link>
         <link rel="stylesheet" href="../../css/brands.css"></link>
@@ -21,67 +21,57 @@
                 <div class="col tabla">
                     <f:view>
                         <div class="col">
-                            <h1><h:outputText value="Usuarios"/></h1>
+                            <h1><h:outputText value="Solicitudes"/></h1>
                         </div>
                         <f:view>
 
 
                             <h:form>
-                                <h:dataTable class="table table-hover table-bordered" value="#{usuarioControlador.consultarUsuario()}" var="item">
+                                <h:dataTable id="tablaSolicitudes" class="table table-hover table-bordered" value="#{solicitudControlador.consultarSolicitud()}" var="item">
                                     <h:column>
                                         <f:facet class="header" name="header">
-                                            <h:outputText value="Id" />
+                                            <h:outputText value="ID"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.id}"/>
+                                        <h:outputText value="#{item.idSolicitud}"/>
                                     </h:column>
                                     <h:column>
                                         <f:facet class="header" name="header">
-                                            <h:outputText value="Titular"/>
+                                            <h:outputText value="Fecha"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.titular}"/>
+                                        <h:outputText value="#{item.fecha}">
+                                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                                        </h:outputText>
                                     </h:column>
                                     <h:column>
                                         <f:facet class="header" name="header">
-                                            <h:outputText value="RazonSocial"/>
+                                            <h:outputText value="Destinatario"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.razonSocial}"/>
+                                        <h:outputText value="#{item.destinatario}"/>
                                     </h:column>
                                     <h:column>
                                         <f:facet class="header" name="header">
-                                            <h:outputText value="Email"/>
+                                            <h:outputText value="Pedido"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.email}"/>
+                                        <h:outputText value="#{item.pedidoidPedido.id}"/>
                                     </h:column>
                                     <h:column>
                                         <f:facet class="header" name="header">
-                                            <h:outputText value="Pais"/>
+                                            <h:outputText value="Usuario"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.pais}"/>
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet class="header" name="header">
-                                            <h:outputText value="Ciudad"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.ciudad}"/>
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet class="header" name="header">
-                                            <h:outputText value="Rol"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.rolidRol.nombre}"/>
-                                    </h:column>
-                                    <h:column>
-                                        <f:facet class="header" name="header">
-                                            <h:outputText value="Rol"/>
-                                        </f:facet>
-                                        <h:commandLink class="opciones-tabla" action="#{usuarioControlador.preEditarUsuario(item)}" onclick="return confirm('¿Estás seguro?')"><i class="fas fa-pen" data-toggle="modal" data-target="#modalEditar"></i></h:commandLink>
-                                        <h:commandLink class="opciones-tabla" action="#{usuarioControlador.eliminarUsuario(item)}" onclick="return confirm('¿Estás seguro?')"><i class="fas fa-trash-alt"></i></h:commandLink>
+                                        <h:outputText value="#{item.usuarioid.nombreTitular}"/>
+                                        <h:commandLink class="opciones-tabla" action="#{solicitudControlador.preEditarSolicitud(item)}" onclick="return confirm('¿Estás seguro?')"><i class="fas fa-pen" data-toggle="modal" data-target="#modalEditar"></i></h:commandLink>
+                                        <h:commandLink class="opciones-tabla" action="#{solicitudControlador.eliminarSolicitud(item)}" onclick="return confirm('¿Estás seguro?')"><i class="fas fa-trash-alt"></i></h:commandLink>
                                     </h:column>
                                 </h:dataTable>
+                                <h3>Exportar datos a Microsoft Excel</h3>
+                                <h:commandLink>
+                                    <p:graphicImage name="images/excel.png" style="width:50px"/>
+                                    <p:dataExporter type="xls" target="tablaSolicitudes" fileName="Solicitudes" pageOnly="true"/>
+                                </h:commandLink>
                             </h:form>
                         </f:view>
-                        <a href="crear-usuario.xhtml"><button type="button" class="boton-salir btn" data-toggle="tooltip" data-placement="bottom" title="Cerrar sesión y salir">
-                                Crear usuario
+                        <a href="crear-solicitud.xhtml"><button type="button" class="boton-salir btn" data-toggle="tooltip" data-placement="bottom">
+                                Crear solicitud
                             </button>  
                         </a> 
                     </f:view>

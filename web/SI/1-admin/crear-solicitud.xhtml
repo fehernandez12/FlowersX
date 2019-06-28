@@ -27,7 +27,7 @@
                         <div class="form-row">
                             <div class="col-md-1 mb-1">
                                 <label for="validationCustom01">ID</label>
-                                <h:inputText value="#{solicitudControlador.solicitud.idSolicitud}" id="idUsuario" class="form-control"></h:inputText>
+                                <h:inputText pt:placeholder="ID" value="#{solicitudControlador.solicitud.idSolicitud}" id="idUsuario" class="form-control"></h:inputText>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="validationCustom01">Fecha</label>
@@ -39,7 +39,7 @@
                         <div class="form-row">
                             <div class="col">
                                 <label for="validationCustom02">Contenido</label>
-                                <h:inputTextarea class="form-control" rows="10" cols="50" value="#{solicitudControlador.solicitud.contenido}"/>
+                                <h:inputTextarea pt:placeholder="Inserta el contenido de la solicitud aquí..." class="form-control" rows="10" cols="50" value="#{solicitudControlador.solicitud.contenido}"/>
                                 <br />
                             </div>
                         </div>
@@ -47,16 +47,16 @@
                             <div class="col-md-8 mb-8">
                                 <label for="validationCustomUsername">Destinatario</label>
                                 <div class="input-group">
-                                    <h:inputText value="#{solicitudControlador.solicitud.destinatario}" id="email" class="form-control"></h:inputText>
+                                    <h:inputText pt:placeholder="ejemplo@ejemplo.com" value="#{solicitudControlador.solicitud.destinatario}" id="email" class="form-control"></h:inputText>
                                 </div>
                             </div>
                             <div class="col-md-2 mb-2">
                                 <label for="validationCustom04">Pedido</label>
-                                <h:inputText value="#{solicitudControlador.pedido.idPedido}" class="form-control"></h:inputText>
+                                <h:inputText pt:placeholder="ID del pedido" value="#{solicitudControlador.pedido.idPedido}" class="form-control"></h:inputText>
                             </div>
                             <div class="col-md-2 mb-2">
                                 <label for="validationCustom04">Usuario</label>
-                                <h:inputText value="#{solicitudControlador.usuario.id}" class="form-control"></h:inputText>
+                                <h:inputText pt:placeholder="ID del Usuario" value="#{solicitudControlador.usuario.id}" class="form-control"></h:inputText>
                             </div>
                         </div>
                         <h:commandButton action="#{solicitudControlador.crearSolicitud()}" class="btn boton-registro" type="submit" value="Crear solicitud"></h:commandButton>
