@@ -365,3 +365,18 @@ BEGIN
 SET new.password := AES_DECRYPT(new.password, 'flowersx');
 END;
 //
+
+DROP PROCEDURE IF EXISTS `sp_insertar_usuario`;
+DELIMITER //
+CREATE PROCEDURE `sp_insertar_usuario` (titular VARCHAR(45),razonSocial VARCHAR(45),email VARCHAR(45),pais VARCHAR(45),ciudad VARCHAR(45),password VARCHAR(45),Rol_idRol INT)
+BEGIN
+INSERT ON usuario(titular,razonSocial,email,pais,ciudad,password,Rol_idRol);
+SET @autoid = 0;
+UPDATE usuario SET id = @autoid = (@autoid+1);
+ALTER TABLE usuario AUTO_INCREMENT = 1;
+END
+//
+
+DROP PROCEDURE IF EXISTS `sp_reporte_usuarios`;
+DELIMITER //
+CREATE PROCEDURE `sp_reporte_usuarios` 
