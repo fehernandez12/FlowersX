@@ -323,7 +323,23 @@ CREATE TABLE `log_usuarios` (
 `contenido` text NOT NULL
 );
 
-DROP TRIGGER IF EXISTS `T_log_usuarrio`;
+DROP TABLE IF EXISTS `log_usuarios`;
+CREATE TABLE `log_solicitudes` (
+`idEntrada` int(5) NOT NULL AUTO_INCREMENT,
+`fecha` date NOT NULL,
+`contenido` text NOT NULL
+);
+
+DROP TRIGGER IF EXISTS `T_log_solicitudes`;
+DELIMITER //
+CREATE TRIGGER `T_log_solicitudes`
+AFTER INSERT ON solicitud FOR EACH ROW
+INSERT INTO log_solicitudes(fecha,contenido)
+VALUES(CURRENT_DATE(),CONCAT(NEW.id,' ',NEW.fecha,' ',NEW.destinatario));
+END;
+//
+
+DROP TRIGGER IF EXISTS `T_log_usuario`;
 DELIMITER //
 CREATE TRIGGER `T_log_usuario`
 AFTER INSERT ON usuario FOR EACH ROW
