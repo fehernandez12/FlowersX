@@ -5,8 +5,7 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
-        <meta charset="UTF-8"></meta>
-        <title>Crear Catalogo</title>
+        <title>Editar catalogo</title>
         <link rel="stylesheet" href="../../css/bootstrap.css"></link>
         <link rel="stylesheet" href="../../css/all.min.css"></link>
         <link rel="stylesheet" href="../../css/brands.css"></link>
@@ -18,33 +17,28 @@
             <div class="titulo row">
                 <div class="col">
                     <h1>Editar Catalogo</h1>
-                    <p>Por favor llena los siguientes datos.</p>
+                    <p>Por favor llena los siguientes datos. Los campos requeridos están marcados con un asterisco (*).</p>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
                     <h:form class="formulario needs-validation">
                         <div class="form-row">
-                            <div class="col-md-1 mb-1">
-                                <label for="validationCustom01">Nombre de Producto</label>
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustom02">Nombre del producto</label>
                                 <h:inputText value="#{catalogoControlador.catalogo.nombreProducto}" id="nombreProducto" class="form-control"></h:inputText>
                             </div>
-                            <div class="col-md-4 mb-4">
-                                <label for="validationCustom01">Descripcion</label>
-                                <h:inputText value="#{catalogoControlador.catalogo.descripcion}" id="descripcion" class="form-control"></h:inputText>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="validationCustom02">Tiempo Cultivo</label>
-                                <h:inputText value="#{catalogoControlador.catalogo.tiempoDeCultivo}" id="tiempoDeCultivo" class="form-control"></h:inputText>
+                            <div class="col-md-4 mb-3">
+                                <label for="validationCustomUsername">Descripcion</label>
+                                <div class="input-group">
+                                    <h:inputText value="#{catalogoControlador.catalogo.descripcion}" id="descripcion" class="form-control"></h:inputText>
+                                </div>
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="dropdown col-md-3 mb-3">
-                                <label for="validationCustom03">Cargo</label>
-                                <br />
-                                <h:selectOneMenu class="btn btn-secondary dropdown-toggle" value="#{usuarioControlador.rol.idRol}">
-                                    <f:selectItems class="dropdown-item" value="#{rolControlador.listar()}" var="rol" itemValue="#{rol.idRol}" itemLabel="#{rol.nombre}"/>
-                                </h:selectOneMenu>
+                            <div class="col-md-4 mb-4">
+                                <label for="validationCustom03">Tiempo de cultivo</label>
+                                <h:inputText value="#{catalogoControlador.catalogo.tiempoDeCultivo}" id="tiempoDeCultivo" class="form-control"></h:inputText>
                             </div>
                         </div>
                         <h:commandButton action="#{catalogoControlador.editarCatalogo()}" class="btn boton-registro" type="submit" value="Editar catalogo"></h:commandButton>
@@ -59,6 +53,3 @@
         <script src="../../js/formularios.js"></script>
     </h:body>
 </html>
-
-
-
