@@ -47,8 +47,9 @@ public CatalogoControlador() {
         return "gestionar-catalogo";
     }
 
-    public void preEditarCatalogo(Catalogo catalogo) {
+    public String preEditarCatalogo(Catalogo catalogo) {
         this.catalogo = catalogo;
+        return "editar-catalogo.xhtml";
     }
 
     public void editarCatalogo() {
