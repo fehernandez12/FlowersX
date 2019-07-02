@@ -314,6 +314,40 @@ GRANT all privileges ON flowersx.novedad TO 'jerson'@'localhost';
 CREATE USER 'flowersxadmin'@'localhost' IDENTIFIED BY 'flowersx';
 GRANT ALL PRIVILEGES ON flowersx.* TO 'flowersxadmin'@'localhost';
 
+-- Procedimientos, triggers y/o funciones
+
+DROP TABLE IF EXISTS `log_usuarios`;
+CREATE TABLE `log_usuarios` (
+`idEntrada` int(5) NOT NULL AUTO_INCREMENT,
+`fecha` date NOT NULL,
+`contenido` text NOT NULL
+);
+
+DROP TABLE IF EXISTS `log_usuarios`;
+CREATE TABLE `log_solicitudes` (
+`idEntrada` int(5) NOT NULL AUTO_INCREMENT,
+`fecha` date NOT NULL,
+`contenido` text NOT NULL
+);
+
+DROP TRIGGER IF EXISTS `T_log_solicitudes`;
+DELIMITER //
+CREATE TRIGGER `T_log_solicitudes`
+AFTER INSERT ON solicitud FOR EACH ROW
+INSERT INTO log_solicitudes(fecha,contenido)
+VALUES(CURRENT_DATE(),CONCAT(NEW.id,' ',NEW.fecha,' ',NEW.destinatario));
+END;
+//
+
+DROP TRIGGER IF EXISTS `T_log_usuario`;
+DELIMITER //
+CREATE TRIGGER `T_log_usuario`
+AFTER INSERT ON usuario FOR EACH ROW
+INSERT INTO log_usuarios(fecha,contenido)
+VALUES(CURRENT_DATE(),CONCAT(NEW.id,' ',NEW.titular,' ',NEW.razonSocial,' ',NEW.email));
+END;
+//
+
 DROP TRIGGER IF EXISTS `T_encriptar_contrasena`;
 DELIMITER //
 CREATE TRIGGER `T_encriptar_contrasena`
