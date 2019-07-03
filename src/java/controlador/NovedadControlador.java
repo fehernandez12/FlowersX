@@ -62,7 +62,7 @@ public class NovedadControlador implements Serializable {
         novedad.setUsuarioid(usuarioFacade.find(usuario.getId()));
         novedadFacade.create(novedad);
         novedad = new Novedad();
-        return "gestionar-novedad.xhtml";
+        return "gestionar-novedad";
     }
 
     public String preEditarNovedad(Novedad novedad) {
@@ -70,10 +70,9 @@ public class NovedadControlador implements Serializable {
         return "editar-novedad.xhtml";
     }
 
-    public String editarNovedad() {
+    public void editarNovedad() {
         novedadFacade.edit(novedad);
         novedad = new Novedad();
-        return "gestionar-novedad.xhtml";
     }
 
     public void eliminarNovedad(Novedad novedad) {
