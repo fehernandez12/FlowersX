@@ -33,14 +33,13 @@
                                 <div class="input-group">
                                     <h:inputText value="#{catalogoControlador.catalogo.descripcion}" id="descripcion" class="form-control"></h:inputText>
                                 </div>
-                            </div>
+                            </div> 
+                                <div class="col-md-4 mb-3">
+                                    <label for="validationCustom03">Tiempo de cultivo</label>
+                                    <h:inputText value="#{catalogoControlador.catalogo.tiempoDeCultivo}" id="tiempoDeCultivo" class="form-control"></h:inputText>
+                                </div>
                         </div>
-                        <div class="form-row">
-                            <div class="col-md-4 mb-4">
-                                <label for="validationCustom03">Tiempo de cultivo</label>
-                                <h:inputText value="#{catalogoControlador.catalogo.tiempoDeCultivo}" id="tiempoDeCultivo" class="form-control"></h:inputText>
-                            </div>
-                        </div>
+
                         <h:commandButton action="#{catalogoControlador.crearCatalogo()}" class="btn boton-registro" type="submit" value="Editar catalogo"></h:commandButton>
                     </h:form>
                 </div>
