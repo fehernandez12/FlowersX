@@ -93,22 +93,20 @@ public class UsuarioControlador implements Serializable {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("sesionLogin", usuarioLogueado);
                 switch (usuarioLogueado.getRolidRol().getIdRol()) {
                     case 1:
-                        redireccionar = "SI/1-admin/index-admin.xhtml";
+                        redireccionar = "ES/Admin/index-admin.xhtml";
                         break;
                     case 3:
-                        redireccionar = "SI/2-ingeniero/index-ingeniero.xhtml";
+                        redireccionar = "ES/Ingeniero/index-ingeniero.xhtml";
                         break;
                     case 4:
-                        redireccionar = "SI/3-vendedor/index-vendedor.xhtml";
+                        redireccionar = "ES/Vendedor/index-vendedor.xhtml";
                         break;
                     case 5:
-                        redireccionar = "SI/4-cliente/index-cliente.xhtml";
+                        redireccionar = "ES/Cliente/index-cliente.xhtml";
                         break;
                     default:
                         throw new AssertionError();
                 }
-            } else {
-                redireccionar = "index";
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
