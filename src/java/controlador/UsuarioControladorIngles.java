@@ -18,18 +18,18 @@ import javax.faces.context.FacesContext;
 
 /**
  *
- * @author Guillermo
+ * @author Aprendiz
  */
-@Named(value = "usuarioControlador")
+@Named(value = "usuarioControladorIngles")
 @SessionScoped
-public class UsuarioControlador implements Serializable {
+public class UsuarioControladorIngles implements Serializable {
 
     /**
-     * Creates a new instance of UsuarioControlador
+     * Creates a new instance of UsuarioControladorIngles
      */
-    public UsuarioControlador() {
+    public UsuarioControladorIngles() {
     }
-
+    
     @EJB
     UsuarioFacade usuarioFacade;
     Usuario usuario = new Usuario();
@@ -46,6 +46,14 @@ public class UsuarioControlador implements Serializable {
         this.usuario = usuario;
     }
 
+    public List<Usuario> getListaUsuarios() {
+        return listaUsuarios;
+    }
+
+    public void setListaUsuarios(List<Usuario> listaUsuarios) {
+        this.listaUsuarios = listaUsuarios;
+    }
+
     public Rol getRol() {
         return rol;
     }
@@ -53,35 +61,9 @@ public class UsuarioControlador implements Serializable {
     public void setRol(Rol rol) {
         this.rol = rol;
     }
-
-    public List<Usuario> consultarUsuario() {
-        return usuarioFacade.findAll();
-    }
-
-    public String crearUsuario() {
-        usuario.setRolidRol(rolFacade.find(rol.getIdRol()));
-        usuarioFacade.create(usuario);
-        usuario = new Usuario();
-        return "gestionar-usuarios";
-    }
-
-    public String preEditarUsuario(Usuario usuario) {
-        this.usuario = usuario;
-        return "editar-usuario";
-    }
-
-    public String editarUsuario() {
-        usuario.setRolidRol(rolFacade.find(rol.getIdRol()));
-        usuarioFacade.edit(usuario);
-        usuario = new Usuario();
-        return "gestionar-usuarios";
-    }
-
-    public void eliminarUsuario(Usuario usuario) {
-        usuarioFacade.remove(usuario);
-        //return "Lista";
-    }
-
+    
+    
+    
     public String validarLogin() {
         String redireccionar = "";
         try {
@@ -91,16 +73,16 @@ public class UsuarioControlador implements Serializable {
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("sesionLogin", usuarioLogueado);
                 switch (usuarioLogueado.getRolidRol().getIdRol()) {
                     case 1:
-                        redireccionar = "ES/Admin/index-admin.xhtml";
+                        redireccionar = "EN/Admin/index-admin.xhtml";
                         break;
                     case 3:
-                        redireccionar = "ES/Ingeniero/index-ingeniero.xhtml";
+                        redireccionar = "EN/Ingeniero/index-ingeniero.xhtml";
                         break;
                     case 4:
-                        redireccionar = "ES/Vendedor/index-vendedor.xhtml";
+                        redireccionar = "EN/Vendedor/index-vendedor.xhtml";
                         break;
                     case 5:
-                        redireccionar = "ES/Cliente/index-cliente.xhtml";
+                        redireccionar = "EN/Cliente/index-cliente.xhtml";
                         break;
                     default:
                         throw new AssertionError();
@@ -112,12 +94,4 @@ public class UsuarioControlador implements Serializable {
         return redireccionar;
     }
     
-    public List<Usuario> getListaUsuarios() {
-        return listaUsuarios;
-    }
- 
-    public void setListaSolicitudes(List<Usuario> listaUsuarios) {
-        this.listaUsuarios = listaUsuarios;
-    }
-
 }

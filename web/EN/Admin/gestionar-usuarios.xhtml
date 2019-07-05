@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <h:head>
+        <meta charset="UTF-8"></meta>
+        <title>Manage users</title>
+        <link rel="stylesheet" href="../../css/bootstrap.css"></link>
+        <link rel="stylesheet" href="../../css/all.min.css"></link>
+        <link rel="stylesheet" href="../../css/brands.css"></link>
+        <link rel="stylesheet" href="../../css/estilos-paginas.css"></link>
+        <link rel="stylesheet" href="../../css/estilos-gestionar-usuarios.css"></link>
+    </h:head>
+    <h:body>
+        <h:outputStylesheet name="../../css/bootstrap.css" />
+        <div data-spy="scroll" data-target="#" data-offset="0" class="container">
+            <div class="row">
+                <div class="col tabla">
+                    <f:view>
+                        <div class="col">
+                            <h1><h:outputText value="Users"/></h1>
+                        </div>
+                        <f:view>
+
+
+                            <h:form>
+                                <p:dataTable id="tablaUsuarios" class="table table-hover table-bordered" value="#{usuarioControlador.consultarUsuario()}" var="item" widgetVar="usuariosTabla"
+                 emptyMessage="Couldn't find users fitting the given criteria." filteredValue="#{usuarioControlados.listaUsuarios}">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <p:outputPanel>
+                                                <h:outputText value="Search:" />
+                                                <p:inputText id="globalFilter" onkeyup="PF('usuariosTabla').filter()" style="width:150px" placeholder=""/>
+                                            </p:outputPanel>
+                                        </f:facet>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet class="header" name="header">
+                                            <h:outputText value="Id" />
+                                        </f:facet>
+                                        <h:outputText value="#{item.id}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet class="header" name="header">
+                                            <h:outputText value="Stakeholder"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.titular}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet class="header" name="header">
+                                            <h:outputText value="Business name"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.razonSocial}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet class="header" name="header">
+                                            <h:outputText value="E-mail"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.email}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet class="header" name="header">
+                                            <h:outputText value="Country"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.pais}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet class="header" name="header">
+                                            <h:outputText value="City"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.ciudad}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet class="header" name="header">
+                                            <h:outputText value="Role"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.rolidRol.nombre}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet class="header" name="header">
+                                            <h:outputText value="Options"/>
+                                        </f:facet>
+                                        <h:commandLink class="opciones-tabla" action="#{usuarioControlador.preEditarUsuario(item)}" onclick="return confirm('Are you sure?')"><i class="fas fa-pen"></i></h:commandLink>
+                                        <h:commandLink class="opciones-tabla" action="#{usuarioControlador.eliminarUsuario(item)}" onclick="return confirm('Are you sure?')"><i class="fas fa-trash-alt"></i></h:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                                <h3>Export data to Microsoft Excel</h3>
+                                <h:commandLink>
+                                    <p:graphicImage name="images/excel.png" style="width:50px"/>
+                                    <p:dataExporter type="xls" target="tablaUsuarios" fileName="Usuarios" pageOnly="true"/>
+                                </h:commandLink>
+                            </h:form>
+                        </f:view>
+                        <a href="crear-usuario.xhtml"><button type="button" class="boton-salir btn" data-toggle="tooltip" data-placement="bottom" title="Cerrar sesión y salir">
+                                Create user
+                            </button>  
+                        </a> 
+                    </f:view>
+                </div>
+            </div>
+        </div>
+        <script src="../../js/popper.min.js"></script>
+        <script src="../../js/jquery.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script src="../../js/admin.js"></script>
+        <script src="../../js/main.js"></script>
+    </h:body>
+</html>
+

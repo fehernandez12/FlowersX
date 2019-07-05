@@ -6,11 +6,11 @@
     <h:head>
         <meta charset="UTF-8"></meta>
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"></meta>
-        <title>FlowersX - Admin</title>
+        <title>FlowersX - Ingeniero</title>
         <link rel="shortcut icon" href="img/icono.png"></link>
+        <link rel="stylesheet" href="css/bootstrap.css"></link>
         <link rel="stylesheet" href="css/all.min.css"></link>
         <link rel="stylesheet" href="css/brands.css"></link>
-        <link rel="stylesheet" href="css/bootstrap.min.css"></link>
         <link rel="stylesheet" href="css/estilos-usuarios.css"></link>
     </h:head>
     <h:body>
@@ -21,44 +21,24 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link js-scroll-trigger dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Usuarios
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="ES/Admin/crear-usuario.xhtml" target="area-trabajo">Crear Usuario</a>
-                                <a class="dropdown-item" href="ES/Admin/gestionar-usuarios.xhtml" target="area-trabajo">Gestionar usuarios</a>
-                            </div>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link js-scroll-trigger dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Solicitudes
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="ES/Admin/crear-solicitud.xhtml" target="area-trabajo">Nueva Solicitud</a>
-                                <a class="dropdown-item" href="ES/Admin/gestionar-solicitudes.xhtml" target="area-trabajo">Gestionar solicitudes</a>
-                            </div>
-                        </li>
+                    <ul class="navbar-nav mr-auto">                                             
                         <li class="nav-item dropdown">
                             <a class="nav-link js-scroll-trigger dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Producción
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="ES/Admin/gestionar-ordenProduccion-admin.xhtml"  target="area-trabajo">Consultar órdenes de producción</a>
-                                <a class="dropdown-item" href="ES/Admin/crear-novedad.xhtml" target="area-trabajo">Registrar novedad</a>
-                                <a class="dropdown-item" href="ES/Admin/gestionar-novedad.xhtml" target="area-trabajo">Gestionar novedades</a>
+                                <a class="dropdown-item" href="ES/Ingeniero/crear-ordenProduccion.xhtml" target="area-trabajo">Crear órdenes de producción</a>
+                                <a class="dropdown-item" href="ES/Ingeniero/gestionar-ordenProduccion.xhtml" target="area-trabajo">Gestionar órdenes de producción</a>
                             </div>
-                        </li>
+                        </li>                        
                         <li class="nav-item dropdown">
                             <a class="nav-link js-scroll-trigger dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Catálogo
+                                Pedidos
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="ES/Admin/crear-catalogo.xhtml" target="area-trabajo">Registrar en catálogo</a>
-                                <a class="dropdown-item" href="ES/Admin/gestionar-catalogo.xhtml" target="area-trabajo">Gestionar catálogo</a>
+                                <a class="dropdown-item" href="ES/Ingeniero/gestionar-pedido-ingeniero.xhtml" target="area-trabajo">Gestionar pedidos</a>                                
                             </div>
-                        </li>
+                        </li>                        
                     </ul>
                     <ul class="navbar-nav my-2 my-sm-0">
                         <li class="nav-item active">
@@ -72,7 +52,7 @@
             </nav>
             <div class="row">
                 <div class="col-12">
-                    <iframe name="area-trabajo" class="col iframe-usuarios" src="ES/Admin/admin-main.xhtml" frameborder="0"></iframe>
+                    <iframe name="area-trabajo" class="col iframe-usuarios" src="ES/Ingeniero/ingeniero-main.xhtml" frameborder="0"></iframe>
                 </div> 
             </div>
         </div>    

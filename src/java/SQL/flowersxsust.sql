@@ -377,6 +377,12 @@ ALTER TABLE usuario AUTO_INCREMENT = 1;
 END
 //
 
-DROP PROCEDURE IF EXISTS `sp_reporte_usuarios`;
+DROP PROCEDURE IF EXISTS `sp_reporte_solicitudes`;
 DELIMITER //
-CREATE PROCEDURE `sp_reporte_usuarios` 
+CREATE PROCEDURE `sp_reporte_solicitudes`
+BEGIN
+DECLARE _fecha DATE; 
+SELECT `solicitud`.`idSolicitud`, `solicitud`.`fecha`, `usuario`.`id`, `usuario`.`email` 
+FROM `solicitud` 
+	LEFT JOIN `usuario` ON `solicitud`.`Usuario_id` = `usuario`.`id`;
+END;
