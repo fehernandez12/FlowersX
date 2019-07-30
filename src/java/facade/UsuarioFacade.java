@@ -11,11 +11,10 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import utilidades.AES;
 
 /**
  *
- * @author Guillermo
+ * @author Aprendiz
  */
 @Stateless
 public class UsuarioFacade extends AbstractFacade<Usuario> {
@@ -34,20 +33,17 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
     
     public Usuario login (Usuario usuario) {
         Usuario usuarioLogin = null;
-        AES aes = new AES();
         try {
-            Query query = em.createQuery("SELECT u FROM Usuario u WHERE u.email =?1  AND u.password =?2");
+            Query query = em.createQuery("SELECT u FROM Usuario u WHERE u.email=?1 AND u.password=?2");
             query.setParameter(1, usuario.getEmail());
             query.setParameter(2, usuario.getPassword());
-            List<Usuario> lista = query.getResultList();
-            if (!lista.isEmpty()) {
-                usuarioLogin = lista.get(0);
+            List<Usuario> list = query.getResultList();
+            if (!list.isEmpty()) {
+                usuarioLogin = list.get(0);
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
         return usuarioLogin;
-        
     }
-    
 }

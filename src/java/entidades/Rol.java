@@ -15,6 +15,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -34,12 +37,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Rol.findAll", query = "SELECT r FROM Rol r")
     , @NamedQuery(name = "Rol.findByIdRol", query = "SELECT r FROM Rol r WHERE r.idRol = :idRol")
-    , @NamedQuery(name = "Rol.findByNombre", query = "SELECT r FROM Rol r WHERE r.nombre = :nombre")})
+    , @NamedQuery(name = "Rol.findByNombre", query = "SELECT r FROM Rol r WHERE r.nombre = :nombre")
+    , @NamedQuery(name = "Rol.findByName", query = "SELECT r FROM Rol r WHERE r.name = :name")})
 public class Rol implements Serializable {
-
-    @Basic(optional = false)
-    @Column(name = "nombre")
-    private String nombre;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -47,7 +47,22 @@ public class Rol implements Serializable {
     @Basic(optional = false)
     @Column(name = "idRol")
     private Integer idRol;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolidRol", fetch = FetchType.LAZY)
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "nombre")
+    private String nombre;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "name")
+    private String name;
+    @JoinTable(name = "rol_has_permisos", joinColumns = {
+        @JoinColumn(name = "Rol_idRol", referencedColumnName = "idRol")}, inverseJoinColumns = {
+        @JoinColumn(name = "permisos_idpermisos", referencedColumnName = "idpermisos")})
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Permiso> permisoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolidRol", fetch = FetchType.EAGER)
     private List<Usuario> usuarioList;
 
     public Rol() {
@@ -57,9 +72,10 @@ public class Rol implements Serializable {
         this.idRol = idRol;
     }
 
-    public Rol(Integer idRol, String nombre) {
+    public Rol(Integer idRol, String nombre, String name) {
         this.idRol = idRol;
         this.nombre = nombre;
+        this.name = name;
     }
 
     public Integer getIdRol() {
@@ -70,6 +86,30 @@ public class Rol implements Serializable {
         this.idRol = idRol;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @XmlTransient
+    public List<Permiso> getPermisoList() {
+        return permisoList;
+    }
+
+    public void setPermisoList(List<Permiso> permisoList) {
+        this.permisoList = permisoList;
+    }
 
     @XmlTransient
     public List<Usuario> getUsuarioList() {
@@ -103,14 +143,6 @@ public class Rol implements Serializable {
     @Override
     public String toString() {
         return "entidades.Rol[ idRol=" + idRol + " ]";
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
     
 }

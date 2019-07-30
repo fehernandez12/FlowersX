@@ -5,10 +5,8 @@
  */
 package controlador;
 
-import entidades.Catalogo;
 import entidades.OrdenProduccion;
 import entidades.Producto;
-import facade.CatalogoFacade;
 import facade.OrdenProduccionFacade;
 import facade.ProductoFacade;
 import javax.inject.Named;
@@ -35,10 +33,6 @@ public class ProductoControlador implements Serializable {
     @EJB
     OrdenProduccionFacade ordenProduccionFacade;
     OrdenProduccion ordenProduccion = new OrdenProduccion();
-    
-    @EJB
-    CatalogoFacade catalogoFacade;
-    Catalogo catalogo = new Catalogo();
    
     public ProductoControlador() {
     }
@@ -59,22 +53,13 @@ public class ProductoControlador implements Serializable {
         this.ordenProduccion = ordenProduccion;
     }
     
-     public Catalogo getCatalogo() {
-        return catalogo;
-    }
-
-    public void setCatalogo(Catalogo catalogo) {
-        this.catalogo = catalogo;
-    }
-    
     public List<Producto> consultarProducto() {
         return productoFacade.findAll();
         
     }
 
     public String crearProducto() {
-        producto.setOrdenDeProduccionidOrdenDeProduccion(ordenProduccionFacade.find(ordenProduccion.getIdOrdenDeProduccion()));
-        producto.setCatalogoidCatalogo(catalogoFacade.find(catalogo.getIdCatalogo()));
+        producto.setOrdenProduccionidOrdenProduccion(ordenProduccionFacade.find(ordenProduccion.getIdOrdenProduccion()));
         productoFacade.create(producto);
         producto = new Producto();
         return "gestionar-producto";
@@ -86,9 +71,7 @@ public class ProductoControlador implements Serializable {
     }
 
     public String editarProducto() {
-        producto.setOrdenDeProduccionidOrdenDeProduccion(ordenProduccionFacade.find(ordenProduccion.getIdOrdenDeProduccion()));
-        producto.setCatalogoidCatalogo(catalogoFacade.find(catalogo.getIdCatalogo()));
-        
+        producto.setOrdenProduccionidOrdenProduccion(ordenProduccionFacade.find(ordenProduccion.getIdOrdenProduccion()));
         productoFacade.edit(producto);
         producto = new Producto();
         return "gestionar-producto";

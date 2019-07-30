@@ -40,8 +40,9 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Pedido.findAll", query = "SELECT p FROM Pedido p")
     , @NamedQuery(name = "Pedido.findByIdPedido", query = "SELECT p FROM Pedido p WHERE p.idPedido = :idPedido")
+    , @NamedQuery(name = "Pedido.findByCantidad", query = "SELECT p FROM Pedido p WHERE p.cantidad = :cantidad")
     , @NamedQuery(name = "Pedido.findByFechaDeCreacion", query = "SELECT p FROM Pedido p WHERE p.fechaDeCreacion = :fechaDeCreacion")
-    , @NamedQuery(name = "Pedido.findByFechaDeEnvio", query = "SELECT p FROM Pedido p WHERE p.fechaDeEnvio = :fechaDeEnvio")
+    , @NamedQuery(name = "Pedido.findByFechaDeEntrega", query = "SELECT p FROM Pedido p WHERE p.fechaDeEntrega = :fechaDeEntrega")
     , @NamedQuery(name = "Pedido.findByMonto", query = "SELECT p FROM Pedido p WHERE p.monto = :monto")})
 public class Pedido implements Serializable {
 
@@ -52,30 +53,48 @@ public class Pedido implements Serializable {
     @Column(name = "idPedido")
     private Integer idPedido;
     @Basic(optional = false)
+    @NotNull
+    @Lob
+    @Size(min = 1, max = 65535)
+    @Column(name = "descipcionArreglo")
+    private String descipcionArreglo;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "cantidad")
+    private int cantidad;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "fechaDeCreacion")
     @Temporal(TemporalType.DATE)
     private Date fechaDeCreacion;
     @Basic(optional = false)
-    @Column(name = "fechaDeEnvio")
+    @NotNull
+    @Column(name = "fechaDeEntrega")
     @Temporal(TemporalType.DATE)
-    private Date fechaDeEnvio;
+    private Date fechaDeEntrega;
     @Basic(optional = false)
+    @NotNull
     @Lob
+    @Size(min = 1, max = 65535)
     @Column(name = "direccionDeEnvio")
     private String direccionDeEnvio;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "monto")
     private int monto;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidoidPedido", fetch = FetchType.LAZY)
-    private List<Novedad> novedadList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidoidPedido", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidoidPedido", fetch = FetchType.EAGER)
     private List<OrdenProduccion> ordenProduccionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidoidPedido", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidoidPedido", fetch = FetchType.EAGER)
+    private List<Novedad> novedadList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidoidPedido", fetch = FetchType.EAGER)
     private List<Solicitud> solicitudList;
     @JoinColumn(name = "Usuario_id", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Usuario usuarioid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidoidPedido", fetch = FetchType.LAZY)
+    @JoinColumn(name = "producto_idProducto", referencedColumnName = "idProducto")
+    @ManyToOne(fetch = FetchType.EAGER)
+    private Producto productoidProducto;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidoidPedido", fetch = FetchType.EAGER)
     private List<Pago> pagoList;
 
     public Pedido() {
@@ -85,10 +104,12 @@ public class Pedido implements Serializable {
         this.idPedido = idPedido;
     }
 
-    public Pedido(Integer idPedido, Date fechaDeCreacion, Date fechaDeEnvio, String direccionDeEnvio, int monto) {
+    public Pedido(Integer idPedido, String descipcionArreglo, int cantidad, Date fechaDeCreacion, Date fechaDeEntrega, String direccionDeEnvio, int monto) {
         this.idPedido = idPedido;
+        this.descipcionArreglo = descipcionArreglo;
+        this.cantidad = cantidad;
         this.fechaDeCreacion = fechaDeCreacion;
-        this.fechaDeEnvio = fechaDeEnvio;
+        this.fechaDeEntrega = fechaDeEntrega;
         this.direccionDeEnvio = direccionDeEnvio;
         this.monto = monto;
     }
@@ -101,6 +122,22 @@ public class Pedido implements Serializable {
         this.idPedido = idPedido;
     }
 
+    public String getDescipcionArreglo() {
+        return descipcionArreglo;
+    }
+
+    public void setDescipcionArreglo(String descipcionArreglo) {
+        this.descipcionArreglo = descipcionArreglo;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
     public Date getFechaDeCreacion() {
         return fechaDeCreacion;
     }
@@ -109,12 +146,12 @@ public class Pedido implements Serializable {
         this.fechaDeCreacion = fechaDeCreacion;
     }
 
-    public Date getFechaDeEnvio() {
-        return fechaDeEnvio;
+    public Date getFechaDeEntrega() {
+        return fechaDeEntrega;
     }
 
-    public void setFechaDeEnvio(Date fechaDeEnvio) {
-        this.fechaDeEnvio = fechaDeEnvio;
+    public void setFechaDeEntrega(Date fechaDeEntrega) {
+        this.fechaDeEntrega = fechaDeEntrega;
     }
 
     public String getDireccionDeEnvio() {
@@ -134,21 +171,21 @@ public class Pedido implements Serializable {
     }
 
     @XmlTransient
-    public List<Novedad> getNovedadList() {
-        return novedadList;
-    }
-
-    public void setNovedadList(List<Novedad> novedadList) {
-        this.novedadList = novedadList;
-    }
-
-    @XmlTransient
     public List<OrdenProduccion> getOrdenProduccionList() {
         return ordenProduccionList;
     }
 
     public void setOrdenProduccionList(List<OrdenProduccion> ordenProduccionList) {
         this.ordenProduccionList = ordenProduccionList;
+    }
+
+    @XmlTransient
+    public List<Novedad> getNovedadList() {
+        return novedadList;
+    }
+
+    public void setNovedadList(List<Novedad> novedadList) {
+        this.novedadList = novedadList;
     }
 
     @XmlTransient
@@ -166,6 +203,14 @@ public class Pedido implements Serializable {
 
     public void setUsuarioid(Usuario usuarioid) {
         this.usuarioid = usuarioid;
+    }
+
+    public Producto getProductoidProducto() {
+        return productoidProducto;
+    }
+
+    public void setProductoidProducto(Producto productoidProducto) {
+        this.productoidProducto = productoidProducto;
     }
 
     @XmlTransient

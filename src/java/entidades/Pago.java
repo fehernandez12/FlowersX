@@ -49,26 +49,35 @@ public class Pago implements Serializable {
     @Column(name = "idPago")
     private Integer idPago;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "medioDePago")
     private String medioDePago;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "numero")
     private String numero;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "codigoDeSeguridad")
     private String codigoDeSeguridad;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "fechaDeVencimiento")
     @Temporal(TemporalType.DATE)
     private Date fechaDeVencimiento;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "numeroDeruta")
     private String numeroDeruta;
     @JoinColumn(name = "Novedad_idNovedad", referencedColumnName = "idNovedad")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Novedad novedadidNovedad;
     @JoinColumn(name = "Pedido_idPedido", referencedColumnName = "idPedido")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Pedido pedidoidPedido;
 
     public Pago() {

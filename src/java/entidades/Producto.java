@@ -6,6 +6,7 @@
 package entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,10 +19,12 @@ import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -33,6 +36,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Producto.findAll", query = "SELECT p FROM Producto p")
     , @NamedQuery(name = "Producto.findByIdProducto", query = "SELECT p FROM Producto p WHERE p.idProducto = :idProducto")
+    , @NamedQuery(name = "Producto.findByNombreProducto", query = "SELECT p FROM Producto p WHERE p.nombreProducto = :nombreProducto")
+    , @NamedQuery(name = "Producto.findByDescripcion", query = "SELECT p FROM Producto p WHERE p.descripcion = :descripcion")
+    , @NamedQuery(name = "Producto.findByTiempoDeCultivo", query = "SELECT p FROM Producto p WHERE p.tiempoDeCultivo = :tiempoDeCultivo")
+    , @NamedQuery(name = "Producto.findByExistencias", query = "SELECT p FROM Producto p WHERE p.existencias = :existencias")
     , @NamedQuery(name = "Producto.findByPrecio", query = "SELECT p FROM Producto p WHERE p.precio = :precio")})
 public class Producto implements Serializable {
 
@@ -43,26 +50,45 @@ public class Producto implements Serializable {
     @Column(name = "idProducto")
     private Integer idProducto;
     @Basic(optional = false)
-    @Lob
-    @Column(name = "producto")
-    private String producto;
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "nombreProducto")
+    private String nombreProducto;
     @Basic(optional = false)
+    @NotNull
     @Lob
+    @Size(min = 1, max = 65535)
+    @Column(name = "estado")
+    private String estado;
+    @Basic(optional = false)
+    @NotNull
+    @Lob
+    @Size(min = 1, max = 65535)
+    @Column(name = "foto")
+    private String foto;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "descripcion")
     private String descripcion;
     @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "tiempoDeCultivo")
+    private String tiempoDeCultivo;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "existencias")
+    private int existencias;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "precio")
     private int precio;
-    @Basic(optional = false)
-    @Lob
-    @Column(name = "estado")
-    private String estado;
-    @JoinColumn(name = "Catalogo_idCatalogo", referencedColumnName = "idCatalogo")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private Catalogo catalogoidCatalogo;
-    @JoinColumn(name = "OrdenDeProduccion_idOrdenDeProduccion", referencedColumnName = "idOrdenDeProduccion")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    private OrdenProduccion ordenDeProduccionidOrdenDeProduccion;
+    @OneToMany(mappedBy = "productoidProducto", fetch = FetchType.EAGER)
+    private List<Pedido> pedidoList;
+    @JoinColumn(name = "OrdenProduccion_idOrdenProduccion", referencedColumnName = "idOrdenProduccion")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private OrdenProduccion ordenProduccionidOrdenProduccion;
 
     public Producto() {
     }
@@ -71,12 +97,15 @@ public class Producto implements Serializable {
         this.idProducto = idProducto;
     }
 
-    public Producto(Integer idProducto, String producto, String descripcion, int precio, String estado) {
+    public Producto(Integer idProducto, String nombreProducto, String estado, String foto, String descripcion, String tiempoDeCultivo, int existencias, int precio) {
         this.idProducto = idProducto;
-        this.producto = producto;
-        this.descripcion = descripcion;
-        this.precio = precio;
+        this.nombreProducto = nombreProducto;
         this.estado = estado;
+        this.foto = foto;
+        this.descripcion = descripcion;
+        this.tiempoDeCultivo = tiempoDeCultivo;
+        this.existencias = existencias;
+        this.precio = precio;
     }
 
     public Integer getIdProducto() {
@@ -87,28 +116,12 @@ public class Producto implements Serializable {
         this.idProducto = idProducto;
     }
 
-    public String getProducto() {
-        return producto;
+    public String getNombreProducto() {
+        return nombreProducto;
     }
 
-    public void setProducto(String producto) {
-        this.producto = producto;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public int getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(int precio) {
-        this.precio = precio;
+    public void setNombreProducto(String nombreProducto) {
+        this.nombreProducto = nombreProducto;
     }
 
     public String getEstado() {
@@ -119,20 +132,61 @@ public class Producto implements Serializable {
         this.estado = estado;
     }
 
-    public Catalogo getCatalogoidCatalogo() {
-        return catalogoidCatalogo;
+    public String getFoto() {
+        return foto;
     }
 
-    public void setCatalogoidCatalogo(Catalogo catalogoidCatalogo) {
-        this.catalogoidCatalogo = catalogoidCatalogo;
+    public void setFoto(String foto) {
+        this.foto = foto;
     }
 
-    public OrdenProduccion getOrdenDeProduccionidOrdenDeProduccion() {
-        return ordenDeProduccionidOrdenDeProduccion;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setOrdenDeProduccionidOrdenDeProduccion(OrdenProduccion ordenDeProduccionidOrdenDeProduccion) {
-        this.ordenDeProduccionidOrdenDeProduccion = ordenDeProduccionidOrdenDeProduccion;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getTiempoDeCultivo() {
+        return tiempoDeCultivo;
+    }
+
+    public void setTiempoDeCultivo(String tiempoDeCultivo) {
+        this.tiempoDeCultivo = tiempoDeCultivo;
+    }
+
+    public int getExistencias() {
+        return existencias;
+    }
+
+    public void setExistencias(int existencias) {
+        this.existencias = existencias;
+    }
+
+    public int getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(int precio) {
+        this.precio = precio;
+    }
+
+    @XmlTransient
+    public List<Pedido> getPedidoList() {
+        return pedidoList;
+    }
+
+    public void setPedidoList(List<Pedido> pedidoList) {
+        this.pedidoList = pedidoList;
+    }
+
+    public OrdenProduccion getOrdenProduccionidOrdenProduccion() {
+        return ordenProduccionidOrdenProduccion;
+    }
+
+    public void setOrdenProduccionidOrdenProduccion(OrdenProduccion ordenProduccionidOrdenProduccion) {
+        this.ordenProduccionidOrdenProduccion = ordenProduccionidOrdenProduccion;
     }
 
     @Override

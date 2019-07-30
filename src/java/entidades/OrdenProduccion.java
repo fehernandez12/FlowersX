@@ -17,7 +17,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -26,7 +25,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -35,12 +33,11 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Aprendiz
  */
 @Entity
-@Table(name = "ordendeproduccion")
+@Table(name = "ordenproduccion")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "OrdenProduccion.findAll", query = "SELECT o FROM OrdenProduccion o")
-    , @NamedQuery(name = "OrdenProduccion.findByIdOrdenDeProduccion", query = "SELECT o FROM OrdenProduccion o WHERE o.idOrdenDeProduccion = :idOrdenDeProduccion")
-    , @NamedQuery(name = "OrdenProduccion.findByCantidad", query = "SELECT o FROM OrdenProduccion o WHERE o.cantidad = :cantidad")
+    , @NamedQuery(name = "OrdenProduccion.findByIdOrdenProduccion", query = "SELECT o FROM OrdenProduccion o WHERE o.idOrdenProduccion = :idOrdenProduccion")
     , @NamedQuery(name = "OrdenProduccion.findByFechainicio", query = "SELECT o FROM OrdenProduccion o WHERE o.fechainicio = :fechainicio")
     , @NamedQuery(name = "OrdenProduccion.findByFechaFin", query = "SELECT o FROM OrdenProduccion o WHERE o.fechaFin = :fechaFin")})
 public class OrdenProduccion implements Serializable {
@@ -49,82 +46,46 @@ public class OrdenProduccion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "idOrdenDeProduccion")
-    private Integer idOrdenDeProduccion;
+    @Column(name = "idOrdenProduccion")
+    private Integer idOrdenProduccion;
     @Basic(optional = false)
-    @Lob
-    @Column(name = "descipcionArreglo")
-    private String descipcionArreglo;
-    @Basic(optional = false)
-    @Column(name = "cantidad")
-    private int cantidad;
-    @Basic(optional = false)
-    @Lob
-    @Column(name = "estado")
-    private String estado;
-    @Basic(optional = false)
+    @NotNull
     @Column(name = "fechainicio")
     @Temporal(TemporalType.DATE)
     private Date fechainicio;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "fechaFin")
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
     @JoinColumn(name = "Pedido_idPedido", referencedColumnName = "idPedido")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Pedido pedidoidPedido;
     @JoinColumn(name = "Usuario_id", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Usuario usuarioid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordenDeProduccionidOrdenDeProduccion", fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordenProduccionidOrdenProduccion", fetch = FetchType.EAGER)
     private List<Producto> productoList;
 
     public OrdenProduccion() {
     }
 
-    public OrdenProduccion(Integer idOrdenDeProduccion) {
-        this.idOrdenDeProduccion = idOrdenDeProduccion;
+    public OrdenProduccion(Integer idOrdenProduccion) {
+        this.idOrdenProduccion = idOrdenProduccion;
     }
 
-    public OrdenProduccion(Integer idOrdenDeProduccion, String descipcionArreglo, int cantidad, String estado, Date fechainicio, Date fechaFin) {
-        this.idOrdenDeProduccion = idOrdenDeProduccion;
-        this.descipcionArreglo = descipcionArreglo;
-        this.cantidad = cantidad;
-        this.estado = estado;
+    public OrdenProduccion(Integer idOrdenProduccion, Date fechainicio, Date fechaFin) {
+        this.idOrdenProduccion = idOrdenProduccion;
         this.fechainicio = fechainicio;
         this.fechaFin = fechaFin;
     }
 
-    public Integer getIdOrdenDeProduccion() {
-        return idOrdenDeProduccion;
+    public Integer getIdOrdenProduccion() {
+        return idOrdenProduccion;
     }
 
-    public void setIdOrdenDeProduccion(Integer idOrdenDeProduccion) {
-        this.idOrdenDeProduccion = idOrdenDeProduccion;
-    }
-
-    public String getDescipcionArreglo() {
-        return descipcionArreglo;
-    }
-
-    public void setDescipcionArreglo(String descipcionArreglo) {
-        this.descipcionArreglo = descipcionArreglo;
-    }
-
-    public int getCantidad() {
-        return cantidad;
-    }
-
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
+    public void setIdOrdenProduccion(Integer idOrdenProduccion) {
+        this.idOrdenProduccion = idOrdenProduccion;
     }
 
     public Date getFechainicio() {
@@ -171,7 +132,7 @@ public class OrdenProduccion implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idOrdenDeProduccion != null ? idOrdenDeProduccion.hashCode() : 0);
+        hash += (idOrdenProduccion != null ? idOrdenProduccion.hashCode() : 0);
         return hash;
     }
 
@@ -182,7 +143,7 @@ public class OrdenProduccion implements Serializable {
             return false;
         }
         OrdenProduccion other = (OrdenProduccion) object;
-        if ((this.idOrdenDeProduccion == null && other.idOrdenDeProduccion != null) || (this.idOrdenDeProduccion != null && !this.idOrdenDeProduccion.equals(other.idOrdenDeProduccion))) {
+        if ((this.idOrdenProduccion == null && other.idOrdenProduccion != null) || (this.idOrdenProduccion != null && !this.idOrdenProduccion.equals(other.idOrdenProduccion))) {
             return false;
         }
         return true;
@@ -190,7 +151,7 @@ public class OrdenProduccion implements Serializable {
 
     @Override
     public String toString() {
-        return "entidades.OrdenProduccion[ idOrdenDeProduccion=" + idOrdenDeProduccion + " ]";
+        return "entidades.OrdenProduccion[ idOrdenProduccion=" + idOrdenProduccion + " ]";
     }
     
 }

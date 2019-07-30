@@ -47,21 +47,34 @@ public class Solicitud implements Serializable {
     @Column(name = "idSolicitud")
     private Integer idSolicitud;
     @Basic(optional = false)
+    @NotNull
     @Column(name = "fecha")
     @Temporal(TemporalType.DATE)
     private Date fecha;
     @Basic(optional = false)
-    @Lob
-    @Column(name = "contenido")
-    private String contenido;
-    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
     @Column(name = "destinatario")
     private String destinatario;
+    @Basic(optional = false)
+    @NotNull
+    @Lob
+    @Size(min = 1, max = 65535)
+    @Column(name = "soporte1")
+    private String soporte1;
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "soporte2")
+    private String soporte2;
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "soporte3")
+    private String soporte3;
     @JoinColumn(name = "Pedido_idPedido", referencedColumnName = "idPedido")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Pedido pedidoidPedido;
     @JoinColumn(name = "Usuario_id", referencedColumnName = "id")
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Usuario usuarioid;
 
     public Solicitud() {
@@ -71,11 +84,11 @@ public class Solicitud implements Serializable {
         this.idSolicitud = idSolicitud;
     }
 
-    public Solicitud(Integer idSolicitud, Date fecha, String contenido, String destinatario) {
+    public Solicitud(Integer idSolicitud, Date fecha, String destinatario, String soporte1) {
         this.idSolicitud = idSolicitud;
         this.fecha = fecha;
-        this.contenido = contenido;
         this.destinatario = destinatario;
+        this.soporte1 = soporte1;
     }
 
     public Integer getIdSolicitud() {
@@ -94,20 +107,36 @@ public class Solicitud implements Serializable {
         this.fecha = fecha;
     }
 
-    public String getContenido() {
-        return contenido;
-    }
-
-    public void setContenido(String contenido) {
-        this.contenido = contenido;
-    }
-
     public String getDestinatario() {
         return destinatario;
     }
 
     public void setDestinatario(String destinatario) {
         this.destinatario = destinatario;
+    }
+
+    public String getSoporte1() {
+        return soporte1;
+    }
+
+    public void setSoporte1(String soporte1) {
+        this.soporte1 = soporte1;
+    }
+
+    public String getSoporte2() {
+        return soporte2;
+    }
+
+    public void setSoporte2(String soporte2) {
+        this.soporte2 = soporte2;
+    }
+
+    public String getSoporte3() {
+        return soporte3;
+    }
+
+    public void setSoporte3(String soporte3) {
+        this.soporte3 = soporte3;
     }
 
     public Pedido getPedidoidPedido() {

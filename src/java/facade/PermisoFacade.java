@@ -5,7 +5,7 @@
  */
 package facade;
 
-import entidades.Rol;
+import entidades.Permiso;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author Aprendiz
  */
 @Stateless
-public class RolFacade extends AbstractFacade<Rol> {
+public class PermisoFacade extends AbstractFacade<Permiso> {
 
     @PersistenceContext(unitName = "FlowersXPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class RolFacade extends AbstractFacade<Rol> {
         return em;
     }
 
-    public RolFacade() {
-        super(Rol.class);
+    public PermisoFacade() {
+        super(Permiso.class);
     }
     
 }
