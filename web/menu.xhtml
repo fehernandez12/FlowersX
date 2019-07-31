@@ -2,15 +2,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
         <meta charset="UTF-8"></meta>
         <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"></meta>
-        <title>FlowersX - Vendedor</title>
+        <title>FlowersX - Admin</title>
         <link rel="shortcut icon" href="img/icono.png"></link>
-        <link rel="stylesheet" href="css/bootstrap.css"></link>
         <link rel="stylesheet" href="css/all.min.css"></link>
         <link rel="stylesheet" href="css/brands.css"></link>
+        <link rel="stylesheet" href="css/bootstrap.min.css"></link>
         <link rel="stylesheet" href="css/estilos-usuarios.css"></link>
     </h:head>
     <h:body>
@@ -21,16 +22,26 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto"> 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link js-scroll-trigger dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Pedidos
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="ES/Vendedor/crear-pedido-vendedor.xhtml" target="area-trabajo">Crear pedido</a>                                
-                                <a class="dropdown-item" href="ES/Vendedor/gestionar-pedido-vendedor.xhtml" target="area-trabajo">Gestionar pedidos</a>                                
-                            </div>
-                        </li>                        
+                    <ul class="navbar-nav mr-auto">
+                        <c:forEach items="#{usuarioControlador.rol.permisoList}" var="p">
+                            <li class="nav-item dropdown">
+                                <c:if test="#{empty p.permisoPadre}">
+                                    <a class="nav-link js-scroll-trigger dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        #{p.nombre}
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <c:forEach items="#{p.permisoList}" var="pl">
+                                            <c:forEach items="#{usuarioControlador.rol.permisoList}" var="pl1">
+                                                <c:if test="#{pl1.idpermisos eq pl.idpermisos}">
+                                                    <a class="dropdown-item" href="#{pl.url}" target="area-trabajo">#{pl.nombre}</a>
+                                                </c:if>
+                                            </c:forEach>
+                                        </c:forEach>
+                                        
+                                    </div>
+                                </c:if>
+                            </li>
+                        </c:forEach>
                     </ul>
                     <ul class="navbar-nav my-2 my-sm-0">
                         <li class="nav-item active">
@@ -44,7 +55,7 @@
             </nav>
             <div class="row">
                 <div class="col-12">
-                    <iframe name="area-trabajo" class="col iframe-usuarios" src="ES/Vendedor/vendedor-main.xhtml" frameborder="0"></iframe>
+                    <iframe name="area-trabajo" class="col iframe-usuarios" src="main-usuario.xhtml" frameborder="0"></iframe>
                 </div> 
             </div>
         </div>    

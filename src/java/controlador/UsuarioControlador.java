@@ -89,38 +89,23 @@ public class UsuarioControlador implements Serializable {
             Usuario usuarioLogueado = usuarioFacade.login(usuario);
             if (usuarioLogueado != null) {
                 rol = usuarioLogueado.getRolidRol();
-                for (/*  */ Permiso permiso : usuarioLogueado.getRolidRol().getPermisoList()) {
+                for (/*  */Permiso permiso : usuarioLogueado.getRolidRol().getPermisoList()) {
                     System.out.println("Permisos: " + permiso.getNombre());
                 }
                 System.out.println("Usuario Logueado: " + usuarioLogueado.getTitular());
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("sesionLogin", usuarioLogueado);
-                switch (usuarioLogueado.getRolidRol().getIdRol()) {
-                    case 1:
-                        redireccionar = "ES/Admin/menu.xhtml";
-                        break;
-                    case 3:
-                        redireccionar = "ES/Ingeniero/index-ingeniero.xhtml";
-                        break;
-                    case 4:
-                        redireccionar = "ES/Vendedor/index-vendedor.xhtml";
-                        break;
-                    case 5:
-                        redireccionar = "ES/Cliente/index-cliente.xhtml";
-                        break;
-                    default:
-                        throw new AssertionError();
-                }
+                redireccionar = "menu.xhtml";
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
         return redireccionar;
     }
-    
+
     public List<Usuario> getListaUsuarios() {
         return listaUsuarios;
     }
- 
+
     public void setListaSolicitudes(List<Usuario> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
     }
