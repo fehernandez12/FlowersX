@@ -38,6 +38,15 @@ public class UsuarioControlador implements Serializable {
     @EJB
     RolFacade rolFacade;
     Rol rol = new Rol();
+    Usuario usuarioLogueado;
+
+    public Usuario getUsuarioLogueado() {
+        return usuarioLogueado;
+    }
+
+    public void setUsuarioLogueado(Usuario usuarioLogueado) {
+        this.usuarioLogueado = usuarioLogueado;
+    }
 
     public Usuario getUsuario() {
         return usuario;
@@ -86,7 +95,7 @@ public class UsuarioControlador implements Serializable {
     public String validarLogin() {
         String redireccionar = "";
         try {
-            Usuario usuarioLogueado = usuarioFacade.login(usuario);
+            usuarioLogueado = usuarioFacade.login(usuario);
             if (usuarioLogueado != null) {
                 rol = usuarioLogueado.getRolidRol();
                 for (/*  */Permiso permiso : usuarioLogueado.getRolidRol().getPermisoList()) {

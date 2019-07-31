@@ -5,16 +5,16 @@
     <h:head>
         <meta charset="UTF-8"></meta>
 	<title>FlowersX</title>
-        <link rel="stylesheet" href="css/bootstrap.css"></link>
 	<link rel="stylesheet" href="css/all.min.css"></link>
 	<link rel="stylesheet" href="css/brands.css"></link>
+        <link rel="stylesheet" href="css/bootstrap.css"></link>
 	<link rel="stylesheet" href="css/estilos-paginas.css"></link>
     </h:head>
     <h:body>
         <div data-spy="scroll" data-target="#" data-offset="0" class="container">
             <div class="row">
 		<div class="col texto">
-                    <h1>¡Bienvenido, #{usuario.titular}!</h1>
+                    <h1>¡Hola, #{usuarioControlador.usuarioLogueado.titular}!</h1>
                     <p>En la barra superior encontrarás<br></br>las acciones que puedes realizar.<br></br>Sitúa el mouse sobre las opciones<br></br>para ver la ayuda :)</p>
 		</div>
 		<div class="col imagen">
@@ -25,8 +25,8 @@
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" type="text/javascript"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" type="text/javascript"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" type="text/javascript"></script>
-	<script src="../../js/admin.js"></script>
-	<script src="../../js/main.js"></script>
+	<script src="js/admin.js"></script>
+	<script src="js/main.js"></script>
     </h:body>
 </html>
 

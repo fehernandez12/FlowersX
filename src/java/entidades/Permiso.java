@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Permiso.findAll", query = "SELECT p FROM Permiso p")
     , @NamedQuery(name = "Permiso.findByIdpermisos", query = "SELECT p FROM Permiso p WHERE p.idpermisos = :idpermisos")
     , @NamedQuery(name = "Permiso.findByNombre", query = "SELECT p FROM Permiso p WHERE p.nombre = :nombre")
+    , @NamedQuery(name = "Permiso.findByNombreEn", query = "SELECT p FROM Permiso p WHERE p.nombreEn = :nombreEn")
     , @NamedQuery(name = "Permiso.findByUrl", query = "SELECT p FROM Permiso p WHERE p.url = :url")
     , @NamedQuery(name = "Permiso.findByIcon", query = "SELECT p FROM Permiso p WHERE p.icon = :icon")})
 public class Permiso implements Serializable {
@@ -49,6 +50,9 @@ public class Permiso implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "nombre")
     private String nombre;
+    @Size(max = 45)
+    @Column(name = "nombre_en")
+    private String nombreEn;
     @Size(max = 45)
     @Column(name = "url")
     private String url;
@@ -87,6 +91,14 @@ public class Permiso implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getNombreEn() {
+        return nombreEn;
+    }
+
+    public void setNombreEn(String nombreEn) {
+        this.nombreEn = nombreEn;
     }
 
     public String getUrl() {
