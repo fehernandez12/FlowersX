@@ -42,3 +42,8 @@ window.onscroll = function() {scrollFunction()};
 $(function () {
   $('[data-toggle="tooltip"]').tooltip('enable');
 });
+$(".link-scroll").click(function(e) {
+    e.preventDefault();
+    var aid = $(this).attr("href");
+    $('html,body').animate({scrollTop: $(aid).offset().top},'slow');
+});
