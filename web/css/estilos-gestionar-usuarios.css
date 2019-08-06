@@ -34,7 +34,7 @@ h1 {
 }
 .titulo {
     text-align: center;
-    padding-top: 100px;
+    padding-top: 70px;
 }
 .tabla {
     padding-left: 100px;
@@ -63,7 +63,7 @@ td{
     background-color: #79B3AA;
 }
 .container{
-    padding-top: 200px;
+    padding-top: 150px;
 }
 .ui-row-editor .ui-row-editor-pencil {
     margin-left:8px;

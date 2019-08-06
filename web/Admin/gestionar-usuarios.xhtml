@@ -8,14 +8,14 @@
     <h:head>
         <meta charset="UTF-8"></meta>
         <title>Gestionar usuarios</title>
-        <link rel="stylesheet" href="../../css/bootstrap.css"></link>
-        <link rel="stylesheet" href="../../css/all.min.css"></link>
-        <link rel="stylesheet" href="../../css/brands.css"></link>
-        <link rel="stylesheet" href="../../css/estilos-paginas.css"></link>
-        <link rel="stylesheet" href="../../css/estilos-gestionar-usuarios.css"></link>
+        <link rel="stylesheet" href="../css/bootstrap.css"></link>
+        <link rel="stylesheet" href="../css/all.min.css"></link>
+        <link rel="stylesheet" href="../css/brands.css"></link>
+        <link rel="stylesheet" href="../css/estilos-paginas.css"></link>
+        <link rel="stylesheet" href="../css/estilos-gestionar-usuarios.css"></link>
     </h:head>
     <h:body>
-        <h:outputStylesheet name="../../css/bootstrap.css" />
+        <h:outputStylesheet name="../css/bootstrap.css" />
         <div data-spy="scroll" data-target="#" data-offset="0" class="container">
             <div class="row">
                 <div class="col tabla">
@@ -28,7 +28,7 @@
 
                             <h:form>
                                 <p:dataTable id="tablaUsuarios" class="table table-hover table-bordered" value="#{usuarioControlador.consultarUsuario()}" var="item" widgetVar="usuariosTabla"
-                 emptyMessage="No se han encontrado usuarios con los criterios dados." filteredValue="#{usuarioControlados.listaUsuarios}">
+                                             emptyMessage="No se han encontrado usuarios con los criterios dados." filteredValue="#{usuarioControlados.listaUsuarios}">
                                     <p:column>
                                         <f:facet name="header">
                                             <p:outputPanel>
@@ -87,7 +87,7 @@
                                         <h:commandLink class="opciones-tabla" action="#{usuarioControlador.eliminarUsuario(item)}" onclick="return confirm('¿Estás seguro?')"><i class="fas fa-trash-alt"></i></h:commandLink>
                                     </p:column>
                                 </p:dataTable>
-                                <h3>Exportar datos a Microsoft Excel</h3>
+                                <h5>Exportar datos a Microsoft Excel</h5>
                                 <h:commandLink>
                                     <p:graphicImage name="images/excel.png" style="width:50px"/>
                                     <p:dataExporter type="xls" target="tablaUsuarios" fileName="Usuarios" pageOnly="true"/>

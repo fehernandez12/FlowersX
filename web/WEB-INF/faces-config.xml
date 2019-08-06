@@ -5,8 +5,16 @@
               xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_1.xsd">
     <application>
         <resource-bundle>
-            <base-name>/Bundle</base-name>
-            <var>bundle</var>
+            <base-name>idiomas.App</base-name>
+            <var>msjApp</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>idiomas.Login</base-name>
+            <var>msjLogin</var>
+        </resource-bundle>
+        <resource-bundle>
+            <base-name>idiomas.Menu</base-name>
+            <var>msjMenu</var>
         </resource-bundle>
     </application>
 </faces-config>
