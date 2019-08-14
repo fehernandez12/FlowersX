@@ -6,15 +6,22 @@ package controlador;
  * and open the template in the editor.
  */
 
+import entidades.Pais;
+import facade.PaisFacade;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.Part;
 
 @ManagedBean(name = "uplCtrl")
 public class UploadControler {
+    
+    @EJB
+    PaisFacade paisFacade;
+    Pais pais = new Pais();
 
     private Part file;
     private String nombre;
@@ -44,7 +51,7 @@ public class UploadControler {
         this.file = file;
     }
 
-    public String upload() {
+    public String upload(String tabla) {
         String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("Archivos");
         path = path.substring(0, path.indexOf("\\build"));
         path = path + "\\web\\Archivos\\";
@@ -60,6 +67,9 @@ public class UploadControler {
             out.write(data);
             in.close();
             out.close();
+            path.replace("\\", "\\\\");
+            paisFacade.cargaArchivos(path, tabla);
+            
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -47,11 +47,15 @@
                         <div class="form-row">
                             <div class="col-md-3 mb-3">
                                 <label for="validationCustom03">País</label>
-                                <h:inputText pt:placeholder="País" value="#{usuarioControlador.usuario.pais}" class="form-control"></h:inputText>
+                                <h:selectOneMenu class="select form-control dropdown-toggle" pt:placeholder="País" value="#{usuarioControlador.pais.idpais}">
+                                    <f:selectItems class="dropdown-item" value="#{paisControlador.listar()}" var="pais" itemValue="#{pais.idpais}" itemLabel="#{pais.nombre}"/>
+                                </h:selectOneMenu>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="validationCustom04">Ciudad</label>
-                                <h:inputText pt:placeholder="Ciudad" value="#{usuarioControlador.usuario.ciudad}" class="form-control"></h:inputText>
+                                <h:selectOneMenu class="select form-control dropdown-toggle" pt:placeholder="Ciudad" value="#{usuarioControlador.ciudad.idciudad}">
+                                    <f:selectItems class="dropdown-item" value="#{ciudadControlador.listar()}" var="ciudad" itemValue="#{ciudad.idciudad}" itemLabel="#{ciudad.nombre}"/>
+                                </h:selectOneMenu>
                             </div>
                             <div class="col-md-3 mb-3">
                                 <label for="validationCustom04">Password</label>
@@ -60,7 +64,7 @@
                             <div class="dropdown col-md-3 mb-3">
                                 <label for="validationCustom03">Cargo</label>
                                 <br />
-                                <h:selectOneMenu class="btn btn-secondary dropdown-toggle" value="#{usuarioControlador.rol.idRol}">
+                                <h:selectOneMenu class="select form-control dropdown-toggle" value="#{usuarioControlador.rol.idRol}">
                                     <f:selectItems class="dropdown-item" value="#{rolControlador.listar()}" var="rol" itemValue="#{rol.idRol}" itemLabel="#{rol.nombre}"/>
                                 </h:selectOneMenu>
                             </div>

@@ -5,9 +5,13 @@
  */
 package controlador;
 
+import entidades.Ciudad;
+import entidades.Pais;
 import entidades.Permiso;
 import entidades.Rol;
 import entidades.Usuario;
+import facade.CiudadFacade;
+import facade.PaisFacade;
 import facade.RolFacade;
 import facade.UsuarioFacade;
 import javax.inject.Named;
@@ -39,6 +43,12 @@ public class UsuarioControlador implements Serializable {
     RolFacade rolFacade;
     Rol rol = new Rol();
     Usuario usuarioLogueado;
+    @EJB
+    PaisFacade paisFacade;
+    Pais pais = new Pais();
+    @EJB
+    CiudadFacade ciudadFacade;
+    Ciudad ciudad = new Ciudad();
 
     public Usuario getUsuarioLogueado() {
         return usuarioLogueado;
@@ -64,12 +74,32 @@ public class UsuarioControlador implements Serializable {
         this.rol = rol;
     }
 
+    public Pais getPais() {
+        return pais;
+    }
+
+    public void setPais(Pais pais) {
+        this.pais = pais;
+    }
+
+    public Ciudad getCiudad() {
+        return ciudad;
+    }
+
+    public void setCiudad(Ciudad ciudad) {
+        this.ciudad = ciudad;
+    }
+    
+    
+
     public List<Usuario> consultarUsuario() {
         return usuarioFacade.findAll();
     }
 
     public String crearUsuario() {
         usuario.setRolidRol(rolFacade.find(rol.getIdRol()));
+        usuario.setPaisIdpais(paisFacade.find(pais.getIdpais()));
+        usuario.setCiudadIdciudad(ciudadFacade.find(ciudad.getIdciudad()));
         usuarioFacade.create(usuario);
         usuario = new Usuario();
         return "gestionar-usuarios";
@@ -101,6 +131,9 @@ public class UsuarioControlador implements Serializable {
                 for (/*  */Permiso permiso : usuarioLogueado.getRolidRol().getPermisoList()) {
                     System.out.println("Permisos: " + permiso.getNombre());
                 }
+                /* usuarioLogueado.getRolidRol().getPermisoList().forEach((permiso) -> {
+                    System.out.println("Permisos: " + permiso.getNombre());
+                }); */
                 System.out.println("Usuario Logueado: " + usuarioLogueado.getTitular());
                 FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("sesionLogin", usuarioLogueado);
                 redireccionar = "menu.xhtml";

@@ -13,6 +13,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -59,6 +60,8 @@ public class Permiso implements Serializable {
     @Size(max = 45)
     @Column(name = "icon")
     private String icon;
+    @ManyToMany(mappedBy = "permisoList", fetch = FetchType.EAGER)
+    private List<Rol> rolList;
     @OneToMany(mappedBy = "permisoPadre", fetch = FetchType.EAGER)
     private List<Permiso> permisoList;
     @JoinColumn(name = "permiso_padre", referencedColumnName = "idpermisos")
@@ -115,6 +118,15 @@ public class Permiso implements Serializable {
 
     public void setIcon(String icon) {
         this.icon = icon;
+    }
+
+    @XmlTransient
+    public List<Rol> getRolList() {
+        return rolList;
+    }
+
+    public void setRolList(List<Rol> rolList) {
+        this.rolList = rolList;
     }
 
     @XmlTransient

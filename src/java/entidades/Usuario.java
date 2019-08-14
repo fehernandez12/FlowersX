@@ -6,9 +6,7 @@
 package entidades;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,12 +17,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -39,8 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Usuario.findByTitular", query = "SELECT u FROM Usuario u WHERE u.titular = :titular")
     , @NamedQuery(name = "Usuario.findByRazonSocial", query = "SELECT u FROM Usuario u WHERE u.razonSocial = :razonSocial")
     , @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")
-    , @NamedQuery(name = "Usuario.findByPais", query = "SELECT u FROM Usuario u WHERE u.pais = :pais")
-    , @NamedQuery(name = "Usuario.findByCiudad", query = "SELECT u FROM Usuario u WHERE u.ciudad = :ciudad")
     , @NamedQuery(name = "Usuario.findByPassword", query = "SELECT u FROM Usuario u WHERE u.password = :password")
     , @NamedQuery(name = "Usuario.findByEstado", query = "SELECT u FROM Usuario u WHERE u.estado = :estado")})
 public class Usuario implements Serializable {
@@ -70,33 +64,21 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
-    @Column(name = "pais")
-    private String pais;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "ciudad")
-    private String ciudad;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
     @Column(name = "password")
     private String password;
     @Basic(optional = false)
     @NotNull
     @Column(name = "estado")
     private int estado;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioid", fetch = FetchType.EAGER)
-    private List<OrdenProduccion> ordenProduccionList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioid", fetch = FetchType.EAGER)
-    private List<Novedad> novedadList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioid", fetch = FetchType.EAGER)
-    private List<Solicitud> solicitudList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioid", fetch = FetchType.EAGER)
-    private List<Pedido> pedidoList;
     @JoinColumn(name = "Rol_idRol", referencedColumnName = "idRol")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Rol rolidRol;
+    @JoinColumn(name = "ciudad_idciudad", referencedColumnName = "idciudad")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Ciudad ciudadIdciudad;
+    @JoinColumn(name = "pais_idpais", referencedColumnName = "idpais")
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    private Pais paisIdpais;
 
     public Usuario() {
     }
@@ -105,13 +87,11 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public Usuario(Integer id, String titular, String razonSocial, String email, String pais, String ciudad, String password, int estado) {
+    public Usuario(Integer id, String titular, String razonSocial, String email, String password, int estado) {
         this.id = id;
         this.titular = titular;
         this.razonSocial = razonSocial;
         this.email = email;
-        this.pais = pais;
-        this.ciudad = ciudad;
         this.password = password;
         this.estado = estado;
     }
@@ -148,22 +128,6 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
-    public String getPais() {
-        return pais;
-    }
-
-    public void setPais(String pais) {
-        this.pais = pais;
-    }
-
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -180,48 +144,28 @@ public class Usuario implements Serializable {
         this.estado = estado;
     }
 
-    @XmlTransient
-    public List<OrdenProduccion> getOrdenProduccionList() {
-        return ordenProduccionList;
-    }
-
-    public void setOrdenProduccionList(List<OrdenProduccion> ordenProduccionList) {
-        this.ordenProduccionList = ordenProduccionList;
-    }
-
-    @XmlTransient
-    public List<Novedad> getNovedadList() {
-        return novedadList;
-    }
-
-    public void setNovedadList(List<Novedad> novedadList) {
-        this.novedadList = novedadList;
-    }
-
-    @XmlTransient
-    public List<Solicitud> getSolicitudList() {
-        return solicitudList;
-    }
-
-    public void setSolicitudList(List<Solicitud> solicitudList) {
-        this.solicitudList = solicitudList;
-    }
-
-    @XmlTransient
-    public List<Pedido> getPedidoList() {
-        return pedidoList;
-    }
-
-    public void setPedidoList(List<Pedido> pedidoList) {
-        this.pedidoList = pedidoList;
-    }
-
     public Rol getRolidRol() {
         return rolidRol;
     }
 
     public void setRolidRol(Rol rolidRol) {
         this.rolidRol = rolidRol;
+    }
+
+    public Ciudad getCiudadIdciudad() {
+        return ciudadIdciudad;
+    }
+
+    public void setCiudadIdciudad(Ciudad ciudadIdciudad) {
+        this.ciudadIdciudad = ciudadIdciudad;
+    }
+
+    public Pais getPaisIdpais() {
+        return paisIdpais;
+    }
+
+    public void setPaisIdpais(Pais paisIdpais) {
+        this.paisIdpais = paisIdpais;
     }
 
     @Override

@@ -8,7 +8,6 @@ package entidades;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,7 +19,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -62,8 +60,6 @@ public class Rol implements Serializable {
         @JoinColumn(name = "permisos_idpermisos", referencedColumnName = "idpermisos")})
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Permiso> permisoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "rolidRol", fetch = FetchType.EAGER)
-    private List<Usuario> usuarioList;
 
     public Rol() {
     }
@@ -109,15 +105,6 @@ public class Rol implements Serializable {
 
     public void setPermisoList(List<Permiso> permisoList) {
         this.permisoList = permisoList;
-    }
-
-    @XmlTransient
-    public List<Usuario> getUsuarioList() {
-        return usuarioList;
-    }
-
-    public void setUsuarioList(List<Usuario> usuarioList) {
-        this.usuarioList = usuarioList;
     }
 
     @Override
