@@ -9,7 +9,6 @@ import entidades.Pais;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  *
@@ -28,12 +27,6 @@ public class PaisFacade extends AbstractFacade<Pais> {
 
     public PaisFacade() {
         super(Pais.class);
-    }
-    
-    public String cargaArchivos (String archivo, String tabla) {
-        Query query = em.createNativeQuery("LOAD DATA LOCAL INFILE '" + archivo + "' INTO TABLE `" + tabla + "` FIELDS TERMINATED BY ';' ENCLOSED BY '\"' ESCAPED BY '\\\\' LINES TERMINATED BY '\\\\r\\\\n'");
-        String resultado = Integer.toString(query.executeUpdate());
-        return resultado;
     }
     
 }

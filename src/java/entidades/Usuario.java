@@ -6,7 +6,9 @@
 package entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,10 +19,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -39,12 +43,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Usuario.findByEstado", query = "SELECT u FROM Usuario u WHERE u.estado = :estado")})
 public class Usuario implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "id")
-    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -70,6 +68,21 @@ public class Usuario implements Serializable {
     @NotNull
     @Column(name = "estado")
     private int estado;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Integer id;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioid", fetch = FetchType.EAGER)
+    private List<Ordenproduccion> ordenproduccionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioid", fetch = FetchType.EAGER)
+    private List<Novedad> novedadList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioid", fetch = FetchType.EAGER)
+    private List<Solicitud> solicitudList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuarioid", fetch = FetchType.EAGER)
+    private List<Pedido> pedidoList;
     @JoinColumn(name = "Rol_idRol", referencedColumnName = "idRol")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Rol rolidRol;
@@ -104,44 +117,41 @@ public class Usuario implements Serializable {
         this.id = id;
     }
 
-    public String getTitular() {
-        return titular;
+
+    @XmlTransient
+    public List<Ordenproduccion> getOrdenproduccionList() {
+        return ordenproduccionList;
     }
 
-    public void setTitular(String titular) {
-        this.titular = titular;
+    public void setOrdenproduccionList(List<Ordenproduccion> ordenproduccionList) {
+        this.ordenproduccionList = ordenproduccionList;
     }
 
-    public String getRazonSocial() {
-        return razonSocial;
+    @XmlTransient
+    public List<Novedad> getNovedadList() {
+        return novedadList;
     }
 
-    public void setRazonSocial(String razonSocial) {
-        this.razonSocial = razonSocial;
+    public void setNovedadList(List<Novedad> novedadList) {
+        this.novedadList = novedadList;
     }
 
-    public String getEmail() {
-        return email;
+    @XmlTransient
+    public List<Solicitud> getSolicitudList() {
+        return solicitudList;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setSolicitudList(List<Solicitud> solicitudList) {
+        this.solicitudList = solicitudList;
     }
 
-    public String getPassword() {
-        return password;
+    @XmlTransient
+    public List<Pedido> getPedidoList() {
+        return pedidoList;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public int getEstado() {
-        return estado;
-    }
-
-    public void setEstado(int estado) {
-        this.estado = estado;
+    public void setPedidoList(List<Pedido> pedidoList) {
+        this.pedidoList = pedidoList;
     }
 
     public Rol getRolidRol() {
@@ -191,6 +201,46 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "entidades.Usuario[ id=" + id + " ]";
+    }
+
+    public String getTitular() {
+        return titular;
+    }
+
+    public void setTitular(String titular) {
+        this.titular = titular;
+    }
+
+    public String getRazonSocial() {
+        return razonSocial;
+    }
+
+    public void setRazonSocial(String razonSocial) {
+        this.razonSocial = razonSocial;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public int getEstado() {
+        return estado;
+    }
+
+    public void setEstado(int estado) {
+        this.estado = estado;
     }
     
 }

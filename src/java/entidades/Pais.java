@@ -38,12 +38,6 @@ import javax.xml.bind.annotation.XmlTransient;
     , @NamedQuery(name = "Pais.findByNombreIngles", query = "SELECT p FROM Pais p WHERE p.nombreIngles = :nombreIngles")})
 public class Pais implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idpais")
-    private Integer idpais;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -54,6 +48,13 @@ public class Pais implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "nombre_ingles")
     private String nombreIngles;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idpais")
+    private Integer idpais;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPais", fetch = FetchType.EAGER)
     private List<Ciudad> ciudadList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "paisIdpais", fetch = FetchType.EAGER)
@@ -80,13 +81,6 @@ public class Pais implements Serializable {
         this.idpais = idpais;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
 
     public String getNombreIngles() {
         return nombreIngles;
@@ -137,6 +131,14 @@ public class Pais implements Serializable {
     @Override
     public String toString() {
         return "entidades.Pais[ idpais=" + idpais + " ]";
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
     
 }

@@ -68,7 +68,6 @@ public class UploadControler {
             in.close();
             out.close();
             path.replace("\\", "\\\\");
-            paisFacade.cargaArchivos(path, tabla);
             
         } catch (Exception e) {
             e.printStackTrace();

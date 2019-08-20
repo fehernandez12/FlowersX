@@ -17,7 +17,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -26,7 +25,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -40,28 +38,13 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Pedido.findAll", query = "SELECT p FROM Pedido p")
     , @NamedQuery(name = "Pedido.findByIdPedido", query = "SELECT p FROM Pedido p WHERE p.idPedido = :idPedido")
-    , @NamedQuery(name = "Pedido.findByCantidad", query = "SELECT p FROM Pedido p WHERE p.cantidad = :cantidad")
     , @NamedQuery(name = "Pedido.findByFechaDeCreacion", query = "SELECT p FROM Pedido p WHERE p.fechaDeCreacion = :fechaDeCreacion")
     , @NamedQuery(name = "Pedido.findByFechaDeEntrega", query = "SELECT p FROM Pedido p WHERE p.fechaDeEntrega = :fechaDeEntrega")
-    , @NamedQuery(name = "Pedido.findByMonto", query = "SELECT p FROM Pedido p WHERE p.monto = :monto")})
+    , @NamedQuery(name = "Pedido.findByCantidadProducto", query = "SELECT p FROM Pedido p WHERE p.cantidadProducto = :cantidadProducto")
+    , @NamedQuery(name = "Pedido.findBySubTotal", query = "SELECT p FROM Pedido p WHERE p.subTotal = :subTotal")
+    , @NamedQuery(name = "Pedido.findByTotal", query = "SELECT p FROM Pedido p WHERE p.total = :total")})
 public class Pedido implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idPedido")
-    private Integer idPedido;
-    @Basic(optional = false)
-    @NotNull
-    @Lob
-    @Size(min = 1, max = 65535)
-    @Column(name = "descipcionArreglo")
-    private String descipcionArreglo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "cantidad")
-    private int cantidad;
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechaDeCreacion")
@@ -72,18 +55,22 @@ public class Pedido implements Serializable {
     @Column(name = "fechaDeEntrega")
     @Temporal(TemporalType.DATE)
     private Date fechaDeEntrega;
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
-    @Lob
-    @Size(min = 1, max = 65535)
-    @Column(name = "direccionDeEnvio")
-    private String direccionDeEnvio;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "monto")
-    private int monto;
+    @Column(name = "idPedido")
+    private Integer idPedido;
+    @Column(name = "cantidadProducto")
+    private Integer cantidadProducto;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "subTotal")
+    private Double subTotal;
+    @Column(name = "total")
+    private Double total;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidoidPedido", fetch = FetchType.EAGER)
-    private List<OrdenProduccion> ordenProduccionList;
+    private List<Ordenproduccion> ordenproduccionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidoidPedido", fetch = FetchType.EAGER)
     private List<Novedad> novedadList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidoidPedido", fetch = FetchType.EAGER)
@@ -104,14 +91,10 @@ public class Pedido implements Serializable {
         this.idPedido = idPedido;
     }
 
-    public Pedido(Integer idPedido, String descipcionArreglo, int cantidad, Date fechaDeCreacion, Date fechaDeEntrega, String direccionDeEnvio, int monto) {
+    public Pedido(Integer idPedido, Date fechaDeCreacion, Date fechaDeEntrega) {
         this.idPedido = idPedido;
-        this.descipcionArreglo = descipcionArreglo;
-        this.cantidad = cantidad;
         this.fechaDeCreacion = fechaDeCreacion;
         this.fechaDeEntrega = fechaDeEntrega;
-        this.direccionDeEnvio = direccionDeEnvio;
-        this.monto = monto;
     }
 
     public Integer getIdPedido() {
@@ -122,61 +105,38 @@ public class Pedido implements Serializable {
         this.idPedido = idPedido;
     }
 
-    public String getDescipcionArreglo() {
-        return descipcionArreglo;
+
+    public Integer getCantidadProducto() {
+        return cantidadProducto;
     }
 
-    public void setDescipcionArreglo(String descipcionArreglo) {
-        this.descipcionArreglo = descipcionArreglo;
+    public void setCantidadProducto(Integer cantidadProducto) {
+        this.cantidadProducto = cantidadProducto;
     }
 
-    public int getCantidad() {
-        return cantidad;
+    public Double getSubTotal() {
+        return subTotal;
     }
 
-    public void setCantidad(int cantidad) {
-        this.cantidad = cantidad;
+    public void setSubTotal(Double subTotal) {
+        this.subTotal = subTotal;
     }
 
-    public Date getFechaDeCreacion() {
-        return fechaDeCreacion;
+    public Double getTotal() {
+        return total;
     }
 
-    public void setFechaDeCreacion(Date fechaDeCreacion) {
-        this.fechaDeCreacion = fechaDeCreacion;
-    }
-
-    public Date getFechaDeEntrega() {
-        return fechaDeEntrega;
-    }
-
-    public void setFechaDeEntrega(Date fechaDeEntrega) {
-        this.fechaDeEntrega = fechaDeEntrega;
-    }
-
-    public String getDireccionDeEnvio() {
-        return direccionDeEnvio;
-    }
-
-    public void setDireccionDeEnvio(String direccionDeEnvio) {
-        this.direccionDeEnvio = direccionDeEnvio;
-    }
-
-    public int getMonto() {
-        return monto;
-    }
-
-    public void setMonto(int monto) {
-        this.monto = monto;
+    public void setTotal(Double total) {
+        this.total = total;
     }
 
     @XmlTransient
-    public List<OrdenProduccion> getOrdenProduccionList() {
-        return ordenProduccionList;
+    public List<Ordenproduccion> getOrdenproduccionList() {
+        return ordenproduccionList;
     }
 
-    public void setOrdenProduccionList(List<OrdenProduccion> ordenProduccionList) {
-        this.ordenProduccionList = ordenProduccionList;
+    public void setOrdenproduccionList(List<Ordenproduccion> ordenproduccionList) {
+        this.ordenproduccionList = ordenproduccionList;
     }
 
     @XmlTransient
@@ -245,6 +205,22 @@ public class Pedido implements Serializable {
     @Override
     public String toString() {
         return "entidades.Pedido[ idPedido=" + idPedido + " ]";
+    }
+
+    public Date getFechaDeCreacion() {
+        return fechaDeCreacion;
+    }
+
+    public void setFechaDeCreacion(Date fechaDeCreacion) {
+        this.fechaDeCreacion = fechaDeCreacion;
+    }
+
+    public Date getFechaDeEntrega() {
+        return fechaDeEntrega;
+    }
+
+    public void setFechaDeEntrega(Date fechaDeEntrega) {
+        this.fechaDeEntrega = fechaDeEntrega;
     }
     
 }
