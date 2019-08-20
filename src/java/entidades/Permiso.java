@@ -32,12 +32,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "permisos")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Permiso.findAll", query = "SELECT p FROM Permiso p")
-    , @NamedQuery(name = "Permiso.findByIdpermisos", query = "SELECT p FROM Permiso p WHERE p.idpermisos = :idpermisos")
-    , @NamedQuery(name = "Permiso.findByNombre", query = "SELECT p FROM Permiso p WHERE p.nombre = :nombre")
-    , @NamedQuery(name = "Permiso.findByNombreEn", query = "SELECT p FROM Permiso p WHERE p.nombreEn = :nombreEn")
-    , @NamedQuery(name = "Permiso.findByUrl", query = "SELECT p FROM Permiso p WHERE p.url = :url")
-    , @NamedQuery(name = "Permiso.findByIcon", query = "SELECT p FROM Permiso p WHERE p.icon = :icon")})
+    @NamedQuery(name = "Permiso.findAll", query = "SELECT p FROM Permiso p")})
 public class Permiso implements Serializable {
 
     private static final long serialVersionUID = 1L;

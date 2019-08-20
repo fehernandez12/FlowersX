@@ -7,9 +7,7 @@ package entidades;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -20,13 +18,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -36,12 +32,15 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "ordenproduccion")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Ordenproduccion.findAll", query = "SELECT o FROM Ordenproduccion o")
-    , @NamedQuery(name = "Ordenproduccion.findByIdOrdenProduccion", query = "SELECT o FROM Ordenproduccion o WHERE o.idOrdenProduccion = :idOrdenProduccion")
-    , @NamedQuery(name = "Ordenproduccion.findByFechainicio", query = "SELECT o FROM Ordenproduccion o WHERE o.fechainicio = :fechainicio")
-    , @NamedQuery(name = "Ordenproduccion.findByFechaFin", query = "SELECT o FROM Ordenproduccion o WHERE o.fechaFin = :fechaFin")})
+    @NamedQuery(name = "Ordenproduccion.findAll", query = "SELECT o FROM Ordenproduccion o")})
 public class Ordenproduccion implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idOrdenProduccion")
+    private Integer idOrdenProduccion;
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechainicio")
@@ -52,21 +51,12 @@ public class Ordenproduccion implements Serializable {
     @Column(name = "fechaFin")
     @Temporal(TemporalType.DATE)
     private Date fechaFin;
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idOrdenProduccion")
-    private Integer idOrdenProduccion;
     @JoinColumn(name = "Pedido_idPedido", referencedColumnName = "idPedido")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Pedido pedidoidPedido;
     @JoinColumn(name = "Usuario_id", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Usuario usuarioid;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "ordenProduccionidOrdenProduccion", fetch = FetchType.EAGER)
-    private List<Producto> productoList;
 
     public Ordenproduccion() {
     }
@@ -89,6 +79,21 @@ public class Ordenproduccion implements Serializable {
         this.idOrdenProduccion = idOrdenProduccion;
     }
 
+    public Date getFechainicio() {
+        return fechainicio;
+    }
+
+    public void setFechainicio(Date fechainicio) {
+        this.fechainicio = fechainicio;
+    }
+
+    public Date getFechaFin() {
+        return fechaFin;
+    }
+
+    public void setFechaFin(Date fechaFin) {
+        this.fechaFin = fechaFin;
+    }
 
     public Pedido getPedidoidPedido() {
         return pedidoidPedido;
@@ -104,15 +109,6 @@ public class Ordenproduccion implements Serializable {
 
     public void setUsuarioid(Usuario usuarioid) {
         this.usuarioid = usuarioid;
-    }
-
-    @XmlTransient
-    public List<Producto> getProductoList() {
-        return productoList;
-    }
-
-    public void setProductoList(List<Producto> productoList) {
-        this.productoList = productoList;
     }
 
     @Override
@@ -138,22 +134,6 @@ public class Ordenproduccion implements Serializable {
     @Override
     public String toString() {
         return "entidades.Ordenproduccion[ idOrdenProduccion=" + idOrdenProduccion + " ]";
-    }
-
-    public Date getFechainicio() {
-        return fechainicio;
-    }
-
-    public void setFechainicio(Date fechainicio) {
-        this.fechainicio = fechainicio;
-    }
-
-    public Date getFechaFin() {
-        return fechaFin;
-    }
-
-    public void setFechaFin(Date fechaFin) {
-        this.fechaFin = fechaFin;
     }
     
 }

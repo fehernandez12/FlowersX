@@ -34,10 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Table(name = "solicitud")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Solicitud.findAll", query = "SELECT s FROM Solicitud s")
-    , @NamedQuery(name = "Solicitud.findByIdSolicitud", query = "SELECT s FROM Solicitud s WHERE s.idSolicitud = :idSolicitud")
-    , @NamedQuery(name = "Solicitud.findByFecha", query = "SELECT s FROM Solicitud s WHERE s.fecha = :fecha")
-    , @NamedQuery(name = "Solicitud.findByDestinatario", query = "SELECT s FROM Solicitud s WHERE s.destinatario = :destinatario")})
+    @NamedQuery(name = "Solicitud.findAll", query = "SELECT s FROM Solicitud s")})
 public class Solicitud implements Serializable {
 
     private static final long serialVersionUID = 1L;

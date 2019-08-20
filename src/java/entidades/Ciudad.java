@@ -34,16 +34,8 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "ciudad")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Ciudad.findAll", query = "SELECT c FROM Ciudad c")
-    , @NamedQuery(name = "Ciudad.findByIdciudad", query = "SELECT c FROM Ciudad c WHERE c.idciudad = :idciudad")
-    , @NamedQuery(name = "Ciudad.findByNombre", query = "SELECT c FROM Ciudad c WHERE c.nombre = :nombre")})
+    @NamedQuery(name = "Ciudad.findAll", query = "SELECT c FROM Ciudad c")})
 public class Ciudad implements Serializable {
-
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 45)
-    @Column(name = "nombre")
-    private String nombre;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -51,6 +43,11 @@ public class Ciudad implements Serializable {
     @Basic(optional = false)
     @Column(name = "idciudad")
     private Integer idciudad;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 45)
+    @Column(name = "nombre")
+    private String nombre;
     @JoinColumn(name = "idPais", referencedColumnName = "idpais")
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     private Pais idPais;
@@ -77,6 +74,13 @@ public class Ciudad implements Serializable {
         this.idciudad = idciudad;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
     public Pais getIdPais() {
         return idPais;
@@ -118,14 +122,6 @@ public class Ciudad implements Serializable {
     @Override
     public String toString() {
         return "entidades.Ciudad[ idciudad=" + idciudad + " ]";
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
     }
     
 }

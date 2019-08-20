@@ -21,7 +21,7 @@ public class UploadControler {
     
     @EJB
     PaisFacade paisFacade;
-    Pais pais = new Pais();
+    Pais pais = new Pais(); 
 
     private Part file;
     private String nombre;

@@ -36,15 +36,15 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "pedido")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Pedido.findAll", query = "SELECT p FROM Pedido p")
-    , @NamedQuery(name = "Pedido.findByIdPedido", query = "SELECT p FROM Pedido p WHERE p.idPedido = :idPedido")
-    , @NamedQuery(name = "Pedido.findByFechaDeCreacion", query = "SELECT p FROM Pedido p WHERE p.fechaDeCreacion = :fechaDeCreacion")
-    , @NamedQuery(name = "Pedido.findByFechaDeEntrega", query = "SELECT p FROM Pedido p WHERE p.fechaDeEntrega = :fechaDeEntrega")
-    , @NamedQuery(name = "Pedido.findByCantidadProducto", query = "SELECT p FROM Pedido p WHERE p.cantidadProducto = :cantidadProducto")
-    , @NamedQuery(name = "Pedido.findBySubTotal", query = "SELECT p FROM Pedido p WHERE p.subTotal = :subTotal")
-    , @NamedQuery(name = "Pedido.findByTotal", query = "SELECT p FROM Pedido p WHERE p.total = :total")})
+    @NamedQuery(name = "Pedido.findAll", query = "SELECT p FROM Pedido p")})
 public class Pedido implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idPedido")
+    private Integer idPedido;
     @Basic(optional = false)
     @NotNull
     @Column(name = "fechaDeCreacion")
@@ -55,13 +55,6 @@ public class Pedido implements Serializable {
     @Column(name = "fechaDeEntrega")
     @Temporal(TemporalType.DATE)
     private Date fechaDeEntrega;
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idPedido")
-    private Integer idPedido;
     @Column(name = "cantidadProducto")
     private Integer cantidadProducto;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -105,6 +98,21 @@ public class Pedido implements Serializable {
         this.idPedido = idPedido;
     }
 
+    public Date getFechaDeCreacion() {
+        return fechaDeCreacion;
+    }
+
+    public void setFechaDeCreacion(Date fechaDeCreacion) {
+        this.fechaDeCreacion = fechaDeCreacion;
+    }
+
+    public Date getFechaDeEntrega() {
+        return fechaDeEntrega;
+    }
+
+    public void setFechaDeEntrega(Date fechaDeEntrega) {
+        this.fechaDeEntrega = fechaDeEntrega;
+    }
 
     public Integer getCantidadProducto() {
         return cantidadProducto;
@@ -205,22 +213,6 @@ public class Pedido implements Serializable {
     @Override
     public String toString() {
         return "entidades.Pedido[ idPedido=" + idPedido + " ]";
-    }
-
-    public Date getFechaDeCreacion() {
-        return fechaDeCreacion;
-    }
-
-    public void setFechaDeCreacion(Date fechaDeCreacion) {
-        this.fechaDeCreacion = fechaDeCreacion;
-    }
-
-    public Date getFechaDeEntrega() {
-        return fechaDeEntrega;
-    }
-
-    public void setFechaDeEntrega(Date fechaDeEntrega) {
-        this.fechaDeEntrega = fechaDeEntrega;
     }
     
 }

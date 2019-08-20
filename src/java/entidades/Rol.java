@@ -35,12 +35,15 @@ import javax.xml.bind.annotation.XmlTransient;
 @Table(name = "rol")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Rol.findAll", query = "SELECT r FROM Rol r")
-    , @NamedQuery(name = "Rol.findByIdRol", query = "SELECT r FROM Rol r WHERE r.idRol = :idRol")
-    , @NamedQuery(name = "Rol.findByNombre", query = "SELECT r FROM Rol r WHERE r.nombre = :nombre")
-    , @NamedQuery(name = "Rol.findByName", query = "SELECT r FROM Rol r WHERE r.name = :name")})
+    @NamedQuery(name = "Rol.findAll", query = "SELECT r FROM Rol r")})
 public class Rol implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "idRol")
+    private Integer idRol;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 45)
@@ -51,13 +54,6 @@ public class Rol implements Serializable {
     @Size(min = 1, max = 45)
     @Column(name = "name")
     private String name;
-
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
-    @Column(name = "idRol")
-    private Integer idRol;
     @JoinTable(name = "rol_has_permisos", joinColumns = {
         @JoinColumn(name = "Rol_idRol", referencedColumnName = "idRol")}, inverseJoinColumns = {
         @JoinColumn(name = "permisos_idpermisos", referencedColumnName = "idpermisos")})
@@ -87,6 +83,21 @@ public class Rol implements Serializable {
         this.idRol = idRol;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @XmlTransient
     public List<Permiso> getPermisoList() {
@@ -129,22 +140,6 @@ public class Rol implements Serializable {
     @Override
     public String toString() {
         return "entidades.Rol[ idRol=" + idRol + " ]";
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
     
 }

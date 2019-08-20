@@ -11,11 +11,16 @@ import entidades.Solicitud;
 import entidades.Usuario;
 import facade.PedidoFacade;
 import facade.UsuarioFacade;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -76,6 +81,10 @@ public class SolicitudControlador implements Serializable {
     public String crearSolicitud () {
         solicitud.setPedidoidPedido(pedidoFacade.find(pedido.getIdPedido()));
         solicitud.setUsuarioid(usuarioFacade.find(usuario.getId()));
+        solicitud.setSoporte1(pathReal);
+        solicitud.setSoporte2(pathReal1);
+        solicitud.setSoporte3(pathReal2);
+        //archivo.setUrl(pathReal);
         solicitudFacade.create(solicitud);
         solicitud = new Solicitud();
         return "gestionar-solicitudes.xhtml";
@@ -102,6 +111,131 @@ public class SolicitudControlador implements Serializable {
  
     public void setListaSolicitudes(List<Solicitud> listaSolicitudes) {
         this.listaSolicitudes = listaSolicitudes;
+    }
+    
+    private Part file;
+    private Part file1;
+    private Part file2;
+    private String nombre;
+    private String pathReal;
+    private String pathReal1;
+    private String pathReal2;
+
+    public String getPath() {
+        return pathReal;
+    }
+
+    public void setPath(String path) {
+        this.pathReal = path;
+    }
+
+    public Part getFile() {
+        return file;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setFile(Part file) {
+        this.file = file;
+    }
+
+    public Part getFile1() {
+        return file1;
+    }
+
+    public void setFile1(Part file1) {
+        this.file1 = file1;
+    }
+
+    public Part getFile2() {
+        return file2;
+    }
+
+    public void setFile2(Part file2) {
+        this.file2 = file2;
+    }
+
+    public void upload(String tabla, Part file) {
+        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("Archivos");
+        path = path.substring(0, path.indexOf("\\build"));
+        path = path + "\\web\\Archivos\\";
+        try {
+            this.nombre = SolicitudControlador.randomAlphaNumeric(15);
+            pathReal = "/UploadFile/Archivos/" + nombre;
+            path = path + this.nombre;
+            InputStream in = file.getInputStream();
+            byte[] data = new byte[in.available()];
+            in.read(data);
+            FileOutputStream out = new FileOutputStream(new File(path));
+            out.write(data);
+            in.close();
+            out.close();
+            path.replace("\\", "\\\\");
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void upload1(String tabla, Part file1) {
+        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("Archivos");
+        path = path.substring(0, path.indexOf("\\build"));
+        path = path + "\\web\\Archivos\\";
+        try {
+            this.nombre = SolicitudControlador.randomAlphaNumeric(15);
+            pathReal1 = "/UploadFile/Archivos/" + nombre;
+            path = path + this.nombre;
+            InputStream in = file.getInputStream();
+            byte[] data = new byte[in.available()];
+            in.read(data);
+            FileOutputStream out = new FileOutputStream(new File(path));
+            out.write(data);
+            in.close();
+            out.close();
+            path.replace("\\", "\\\\");
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void upload2(String tabla, Part file2) {
+        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("Archivos");
+        path = path.substring(0, path.indexOf("\\build"));
+        path = path + "\\web\\Archivos\\";
+        try {
+            this.nombre = SolicitudControlador.randomAlphaNumeric(15);
+            pathReal2 = "/UploadFile/Archivos/" + nombre;
+            path = path + this.nombre;
+            InputStream in = file.getInputStream();
+            byte[] data = new byte[in.available()];
+            in.read(data);
+            FileOutputStream out = new FileOutputStream(new File(path));
+            out.write(data);
+            in.close();
+            out.close();
+            path.replace("\\", "\\\\");
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+
+    public static String randomAlphaNumeric(int count) {
+        StringBuilder builder = new StringBuilder();
+        while (count-- != 0) {
+            int character = (int) (Math.random() * ALPHA_NUMERIC_STRING.length());
+            builder.append(ALPHA_NUMERIC_STRING.charAt(character));
+        }
+        return builder.toString();
     }
     
 }
