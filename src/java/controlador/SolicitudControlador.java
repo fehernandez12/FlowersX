@@ -17,9 +17,23 @@ import java.io.InputStream;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+import java.util.Properties;
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
+import javax.mail.BodyPart;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.Part;
 
 /**
@@ -43,8 +57,7 @@ public class SolicitudControlador implements Serializable {
     @EJB
     UsuarioFacade usuarioFacade;
     Usuario usuario = new Usuario();
-    
-    
+
     public SolicitudControlador() {
     }
 
@@ -71,48 +84,90 @@ public class SolicitudControlador implements Serializable {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-    
-    
-    
-    public List<Solicitud> consultarSolicitud () {
+
+    public List<Solicitud> consultarSolicitud() {
         return solicitudFacade.findAll();
     }
-    
-    public String crearSolicitud () {
+
+    public String crearSolicitud() throws UnsupportedEncodingException {
+        String asunto;
         solicitud.setPedidoidPedido(pedidoFacade.find(pedido.getIdPedido()));
         solicitud.setUsuarioid(usuarioFacade.find(usuario.getId()));
         solicitud.setSoporte1(pathReal);
         solicitud.setSoporte2(pathReal1);
         solicitud.setSoporte3(pathReal2);
+        asunto = "Solicitud de transporte, pedido número " + solicitud.getPedidoidPedido();
         //archivo.setUrl(pathReal);
         solicitudFacade.create(solicitud);
+        final String user = "santamartaflowers@gmail.com";//cambiará en consecuencia al servidor utilizado
+        final String pass = "flowersx";
+        Properties props = new Properties();
+        props.setProperty("mail.transport.protocol", "smtp");
+        props.setProperty("mail.smtp.host", "smtp.gmail.com"); // envia 
+        props.setProperty("mail.smtp.starttls.enable", "true");
+        props.setProperty("mail.smtp.port", "587");
+        props.setProperty("mail.smtp.starttls.required", "false");
+        props.setProperty("mail.smtp.auth", "true");
+        props.setProperty("mail.smtp.ssl.trust", "smtp.gmail.com");
+
+        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(user, pass);
+            }
+        });
+        try {
+            BodyPart adjunto = new MimeBodyPart();
+            adjunto.setDataHandler(new DataHandler(new FileDataSource(pathReal)));
+            adjunto.setFileName("Soporte 1");
+            BodyPart adjunto1 = new MimeBodyPart();
+            adjunto1.setDataHandler(new DataHandler(new FileDataSource(pathReal1)));
+            adjunto1.setFileName("Soporte 2");
+            BodyPart adjunto2 = new MimeBodyPart();
+            adjunto2.setDataHandler(new DataHandler(new FileDataSource(pathReal2)));
+            adjunto2.setFileName("Soporte 3");
+
+            MimeMultipart multiparte = new MimeMultipart();
+            multiparte.addBodyPart(adjunto);
+            multiparte.addBodyPart(adjunto1);
+            multiparte.addBodyPart(adjunto2);
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(user, ""));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(solicitud.getDestinatario()));
+            message.setSubject(solicitud.getDestinatario());
+            message.setContent(multiparte, "text/html; charset=utf-8");
+
+            //3rd paso)send message
+            Transport.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
         solicitud = new Solicitud();
         return "gestionar-solicitudes.xhtml";
     }
-    
-    public String preEditarSolicitud (Solicitud solicitud) {
+
+    public String preEditarSolicitud(Solicitud solicitud) {
         this.solicitud = solicitud;
         return "editar-solicitud.xhtml";
     }
-    
-    public String editarSolicitud () {
+
+    public String editarSolicitud() {
         solicitudFacade.edit(solicitud);
         solicitud = new Solicitud();
         return "gestionar-solicitudes.xhtml";
     }
-    
+
     public void eliminarSolicitud(Solicitud solicitud) {
         solicitudFacade.remove(solicitud);
     }
-    
+
     public List<Solicitud> getListaSolicitudes() {
         return listaSolicitudes;
     }
- 
+
     public void setListaSolicitudes(List<Solicitud> listaSolicitudes) {
         this.listaSolicitudes = listaSolicitudes;
     }
-    
+
     private Part file;
     private Part file1;
     private Part file2;
@@ -177,12 +232,12 @@ public class SolicitudControlador implements Serializable {
             in.close();
             out.close();
             path.replace("\\", "\\\\");
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     public void upload1(String tabla, Part file1) {
         String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("Archivos");
         path = path.substring(0, path.indexOf("\\build"));
@@ -199,12 +254,12 @@ public class SolicitudControlador implements Serializable {
             in.close();
             out.close();
             path.replace("\\", "\\\\");
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     public void upload2(String tabla, Part file2) {
         String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("Archivos");
         path = path.substring(0, path.indexOf("\\build"));
@@ -221,7 +276,7 @@ public class SolicitudControlador implements Serializable {
             in.close();
             out.close();
             path.replace("\\", "\\\\");
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -237,5 +292,5 @@ public class SolicitudControlador implements Serializable {
         }
         return builder.toString();
     }
-    
+
 }

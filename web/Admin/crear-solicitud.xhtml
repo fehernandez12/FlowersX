@@ -24,93 +24,49 @@
             <div class="row">
                 <div class="col">
                     <f:view>
-
-
-                        <h:form>
-                            <h1><h:outputText value="Create/Edit"/></h1>
-                            <h:panelGrid columns="2">
-                                <div class="form-row">
-                                    <div class="col md-1 mb-1">
-                                        <h:outputLabel value="Id de la Solicitud:" for="idSolicitud" />
-                                        <h:inputText class="form-control" pt:placeholder="Id de la Solicitud" id="idSolicitud" value="#{solicitudControlador.solicitud.idSolicitud}" title="IdSolicitud" required="true" requiredMessage="The IdSolicitud field is required."/>
-                                    </div>
-                                    <div class="col md-3 mb-3">
-                                        <h:outputLabel value="Fecha:" for="fecha" />
-                                        <h:inputText class="form-control" pt:placeholder="MM/DD/AAAA" id="fecha" value="#{solicitudControlador.solicitud.fecha}" title="Fecha" required="true" requiredMessage="The Fecha field is required.">
-                                            <f:convertDateTime pattern="MM/dd/yyyy" />
-                                        </h:inputText>
-                                    </div>
+                        <h:form class="formulario">
+                            <div class="form-row">
+                                <div class="col-2 md-1 mb-1">
+                                    <h:outputLabel value="Id de la Solicitud:" for="idSolicitud" />
+                                    <h:inputText class="form-control" pt:placeholder="Id de la Solicitud" id="idSolicitud" value="#{solicitudControlador.solicitud.idSolicitud}" title="IdSolicitud" required="true" requiredMessage="The IdSolicitud field is required."/>
                                 </div>
-                                <div class="form-row">
-                                    <div class="col md-12 mb-12">
-                                        <h:outputLabel value="Destinatario:" for="destinatario" />
-                                        <h:inputText class="form-control" pt:placeholder="Destinatario" id="destinatario" value="#{solicitudControlador.solicitud.destinatario}" title="Destinatario" required="true" requiredMessage="The Destinatario field is required."/>
-                                    </div>
+                                <div class="col-3 md-3 mb-3">
+                                    <h:outputLabel value="Fecha:" for="fecha" />
+                                    <h:inputText class="form-control" pt:placeholder="MM/DD/AAAA" id="fecha" value="#{solicitudControlador.solicitud.fecha}" title="Fecha" required="true" requiredMessage="The Fecha field is required.">
+                                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                                    </h:inputText>
                                 </div>
-                                <div class="form-row">
-                                    <h:outputLabel value="Soporte::" for="soporte1" />
-                                    <h:inputFile class="form-control-file" pt:placeholder="Soporte:" id="soporte1" value="#{solicitudControlador.file}" title="Soporte1" required="true" requiredMessage="The Soporte1 field is required."/>
-                                    <h:outputLabel value="Soporte adicional:" for="soporte2" />
-                                    <h:inputFile class="form-control-file" pt:placeholder="Soporte adicional:" id="soporte2" value="#{solicitudControlador.file1}" title="Soporte2" />
-                                    <h:outputLabel value="Soporte adicional:" for="soporte3" />
-                                    <h:inputFile class="form-control-file" pt:placeholder="Soporte adicional" id="soporte3" value="#{solicitudControlador.file2}" title="Soporte3" />
+                            </div>
+                            <div class="form-row">
+                                <div class="col-6 md-4 mb-4">
+                                    <h:outputLabel value="Destinatario:" for="destinatario" />
+                                    <h:inputText class="form-control" pt:placeholder="Destinatario" id="destinatario" value="#{solicitudControlador.solicitud.destinatario}" title="Destinatario" required="true" requiredMessage="The Destinatario field is required."/>
                                 </div>
-                                <div class="form-row">
-                                    <div class="col md-3 mb-3">
-                                        <h:outputLabel value="Id de Pedido:" for="pedidoidPedido" />
-                                        <h:selectOneMenu class="form-control" pt:placeholder="Id de Pedido" id="pedidoidPedido" value="#{solicitudControlador.pedido.idPedido}" title="PedidoidPedido" required="true" requiredMessage="The PedidoidPedido field is required.">
-                                            <!-- TODO: update below reference to list of available items-->
-                                            <f:selectItems class="dropdown-item" value="#{pedidoControlador.listar()}" var="pedido" itemValue="#{pedido.idPedido}" itemLabel="#{pedido.idPedido}"/>
-                                        </h:selectOneMenu>
-                                    </div>
-                                    <div class="col md-3 mb-3">
-                                        <h:outputLabel value="Id de Usuario:" for="usuarioid" />
-                                        <h:inputText class="form-control" id="usuarioid" value="#{usuarioControlador.usuarioLogueado.titular}" title="Usuarioid" readonly="true" />
-                                    </div>
+                            </div>
+                            <div class="form-row">
+                                <h:outputLabel value="Soporte:" for="soporte1" />
+                                <h:inputFile class="form-control-file" pt:placeholder="Soporte:" id="soporte1" value="#{solicitudControlador.file}" title="Soporte1" required="true" requiredMessage="The Soporte1 field is required."/>
+                                <h:outputLabel value="Soporte adicional:" for="soporte2" />
+                                <h:inputFile class="form-control-file" pt:placeholder="Soporte adicional:" id="soporte2" value="#{solicitudControlador.file1}" title="Soporte2" />
+                                <h:outputLabel value="Soporte adicional:" for="soporte3" />
+                                <h:inputFile class="form-control-file" pt:placeholder="Soporte adicional" id="soporte3" value="#{solicitudControlador.file2}" title="Soporte3" />
+                            </div>
+                            <div class="form-row">
+                                <div class="col md-3 mb-3">
+                                    <h:outputLabel value="Id de Pedido:" for="pedidoidPedido" />
+                                    <h:selectOneMenu class="form-control" pt:placeholder="Id de Pedido" id="pedidoidPedido" value="#{solicitudControlador.pedido.idPedido}" title="PedidoidPedido" required="true" requiredMessage="The PedidoidPedido field is required.">
+                                        <!-- TODO: update below reference to list of available items-->
+                                        <f:selectItems class="dropdown-item" value="#{pedidoControlador.listar()}" var="pedido" itemValue="#{pedido.idPedido}" itemLabel="#{pedido.idPedido}"/>
+                                    </h:selectOneMenu>
                                 </div>
-                            </h:panelGrid>
+                                <div class="col md-3 mb-3">
+                                    <h:outputLabel value="Id de Usuario:" for="usuarioid" />
+                                    <h:inputText class="form-control" id="usuarioid" value="#{usuarioControlador.usuarioLogueado.titular}" title="Usuarioid" readonly="true" />
+                                </div>
+                            </div>
+                            <h:commandButton class="btn btn-secondary" action="#{solicitudControlador.crearSolicitud()}" value="Crear solicitud" />
                         </h:form>
                     </f:view>
-
-
-                    <!-- <h:form class="formulario needs-validation">
-                        <div class="form-row">
-                            <div class="col-md-1 mb-1">
-                                <label for="validationCustom01">ID</label>
-                                <h:inputText pt:placeholder="ID" value="#{solicitudControlador.solicitud.idSolicitud}" id="idUsuario" class="form-control"></h:inputText>
-                            </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="validationCustom01">Fecha</label>
-                                <h:inputText pt:type="date" value="#{solicitudControlador.solicitud.fecha}" id="nombreTitular" class="form-control">
-                                    <f:convertDateTime pattern="yyyy-MM-dd" />
-                                </h:inputText>
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col">
-                                <label for="validationCustom02">Contenido</label>
-                                <h:inputTextarea pt:placeholder="Inserta el contenido de la solicitud aquí..." class="form-control" rows="10" cols="50" value="#{solicitudControlador.solicitud.contenido}"/>
-                                <br />
-                            </div>
-                        </div>
-                        <div class="form-row">
-                            <div class="col-md-8 mb-8">
-                                <label for="validationCustomUsername">Destinatario</label>
-                                <div class="input-group">
-                                    <h:inputText pt:placeholder="ejemplo@ejemplo.com" value="#{solicitudControlador.solicitud.destinatario}" id="email" class="form-control"></h:inputText>
-                                </div>
-                            </div>
-                            <div class="col-md-2 mb-2">
-                                <label for="validationCustom04">Pedido</label>
-                                <h:inputText pt:placeholder="ID del pedido" value="#{solicitudControlador.pedido.idPedido}" class="form-control"></h:inputText>
-                            </div>
-                            <div class="col-md-2 mb-2">
-                                <label for="validationCustom04">Usuario</label>
-                                <h:inputText pt:placeholder="ID del Usuario" value="#{solicitudControlador.usuario.id}" class="form-control"></h:inputText>
-                            </div>
-                        </div>
-                        <h:commandButton action="#{solicitudControlador.crearSolicitud()}" class="btn boton-registro" type="submit" value="Crear solicitud"></h:commandButton>
-                    </h:form> -->
                 </div>
             </div>
         </div>
