@@ -17,7 +17,7 @@
         <div data-spy="scroll" data-target="#" data-offset="0" class="container">
             <div class="titulo row">
                 <div class="col">
-                    <h1>Crear Pedido</h1>
+                    <h1>Registrar pedido</h1>
                     <p>Por favor llena los siguientes datos.</p>
                 </div>
             </div>
@@ -25,40 +25,42 @@
                 <div class="col">
                     <h:form class="formulario needs-validation">
                         <div class="form-row">
-                            
-                            <div class="col-md-3 mb-3">
-                                <label for="validationCustom01">fecha de creacion</label>
+                            <div class="col-md-3 mb-4">
+                                <label for="validationCustom01">Ingrese la fecha de creación</label>
                                 <h:inputText pt:type="date" value="#{pedidoControlador.pedido.fechaDeCreacion}" id="fechaDeCreacion" class="form-control">
                                     <f:convertDateTime pattern="yyyy-MM-dd" />
                                 </h:inputText>
                             </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="validationCustom01">fecha de envio</label>
-                                <h:inputText pt:type="date" value="#{pedidoControlador.pedido.fechaDeEnvio}" id="fechaDeEnvio" class="form-control">
+                            <div class="col-md-3 mb-4">
+                                <label for="validationCustom01">Ingrese la fecha de entrega</label>
+                                <h:inputText pt:type="date" value="#{pedidoControlador.pedido.fechaDeEntrega}" id="fechaDeEntrega" class="form-control">
                                     <f:convertDateTime pattern="yyyy-MM-dd" />
                                 </h:inputText>
                             </div>
-                            <div class="col-md-8 mb-8">
-                                <label for="validationCustomUsername">direccionDeEnvio</label>
-                                <div class="input-group">
-                                    <h:inputText value="#{pedidoControlador.pedido.direccionDeEnvio}" id="direccionDeEnvio" class="form-control"></h:inputText>
-                                </div>
-                            </div>
                         </div>
-                        
                         <div class="form-row">
-                            
-                            
-                             <div class="dropdown col-md-3 mb-3">
-                                <label for="validationCustom03">Razón Social</label>
-                                <br />
-                                
-                                <h:selectOneMenu class="btn btn-secondary dropdown-toggle" value="#{pedidoControlador.usuario.id}">
-                                    <f:selectItems class="dropdown-item" value="#{usuarioControlador.consultarUsuario()}" var="usuario" itemValue="#{usuario.id}" itemLabel="#{usuario.razonSocial}"/>
-                                </h:selectOneMenu>
+                            <div class="col-md-4 mb-4">
+                                <label for="validationCustom01">Registre la cantidad del producto</label>
+                                <h:inputText pt:placeholder="0" value="#{pedidoControlador.pedido.cantidadProducto}" id="cantidadProducto" class="form-control"></h:inputText>
                             </div>
                         </div>
-                        <h:commandButton action="#{pedidoControlador.crearPedido()}" class="btn boton-registro" type="submit" value="Crear pedido"></h:commandButton>
+                        <div class="form-row">
+                            <div class="col md-3 mb-3">
+                                <h:outputLabel value="Usuario:" for="usuarioid" />
+                                <h:inputText class="form-control" id="usuarioid" value="#{usuarioControlador.usuarioLogueado.titular}" title="Usuarioid" readonly="true" />
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col-md-3 mb-3">
+                                <label for="validationCustom02">SubTotal</label>
+                                <h:inputText pt:placeholder="0" value="#{pedidoControlador.pedido.subTotal}" id="subTotal" class="form-control"></h:inputText>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label for="validationCustom01">Total</label>
+                                <h:inputText pt:placeholder="0" value="#{pedidoControlador.pedido.total}" id="total" class="form-control"></h:inputText>
+                            </div>
+                        </div>
+                        <h:commandButton action="#{pedidoControlador.crearPedido()}" class="btn boton-registro" type="submit" value="Crear usuario"></h:commandButton>
                     </h:form>
                 </div>
             </div>

@@ -37,39 +37,39 @@
                                     </p:column>
                                     <p:column>
                                         <f:facet class="header" name="header">
-                                            <h:outputText value="Producto" />
+                                            <h:outputText value="" />
                                         </f:facet>
-                                        <h:outputText value="#{item.producto}"/>
+                                        <h:outputText value="#{item.foto}"/>
                                     </p:column>
                                     <p:column>
                                         <f:facet class="header" name="header">
-                                            <h:outputText value="Descripcion"/>
+                                            <h:outputText value=""/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.nombreProducto}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet class="header" name="header">
+                                            <h:outputText value=""/>
                                         </f:facet>
                                         <h:outputText value="#{item.descripcion}"/>
                                     </p:column>
                                     <p:column>
                                         <f:facet class="header" name="header">
-                                            <h:outputText value="precio"/>
+                                            <h:outputText value=""/>
                                         </f:facet>
-                                        <h:outputText value="#{item.precio}"/>
+                                        <h:outputText value="#{item.tiempoDeCultivo}"/>
                                     </p:column>
                                     <p:column>
                                         <f:facet class="header" name="header">
-                                            <h:outputText value="estado"/>
+                                            <h:outputText value="Existencias:"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.estado}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet class="header" name="header">
-                                            <h:outputText value="Descipcion Arreglo"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.ordenDeProduccionidOrdenDeProduccion.descipcionArreglo}"/>
+                                        <h:outputText value="#{item.existencias}"/>
                                     </p:column>                                                                        
                                     <p:column>
                                         <f:facet class="header" name="header">
-                                            <h:outputText value="Tiempo de cultivo"/>
+                                            <h:outputText value="Precio:"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.catalogoidCatalogo.tiempoDeCultivo}"/>
+                                        <h:outputText value="#{item.precio}"/>
                                     </p:column>                                                                        
                                     <p:column>
                                         <f:facet class="header" name="header">

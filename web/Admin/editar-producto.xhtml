@@ -26,43 +26,39 @@
                     <h:form class="formulario needs-validation">
                         <div class="form-row">                           
                             <div class="col-md-4 mb-4">
-                                <label for="validationCustom01">producto</label>
-                                <h:inputText value="#{productoControlador.producto.producto}" id="producto" class="form-control"></h:inputText>
+                                <label for="validationCustom01">Registre el nombre del producto</label>
+                                <h:inputText value="#{productoControlador.producto.nombreProducto}" id="nombreProducto" class="form-control"></h:inputText>
                             </div>
                             <div class="col-md-3 mb-3">
-                                <label for="validationCustom02">descripcion</label>
-                                <h:inputText value="#{productoControlador.producto.descripcion}" id="descripcion" class="form-control"></h:inputText>
+                                <label for="validationCustom02">Ingrese Foto del producto:</label>
+                                <h:inputText value="#{productoControlador.producto.foto}" id="foto" class="form-control"></h:inputText>
                             </div>
                             <div class="col-md-4 mb-4">
-                                <label for="validationCustomUsername">precio</label>
+                                <label for="validationCustomUsername">De una breve descripcion del producto:</label>
+                                <div class="input-group">
+                                    <h:inputText value="#{productoControlador.producto.descripcion}" id="descripcion" class="form-control"></h:inputText>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label for="validationCustomUsername">Tiempo de duracion del Cultivo:</label>
+                                <div class="input-group">
+                                    <h:inputText value="#{productoControlador.producto.tiempoDeCultivo}" id="tiempoDeCultivo" class="form-control"></h:inputText>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label for="validationCustomUsername">Existencias del Producto:</label>
+                                <div class="input-group">
+                                    <h:inputText value="#{productoControlador.producto.existencias}" id="existencias" class="form-control"></h:inputText>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-4">
+                                <label for="validationCustomUsername">Ingrese el valor del producto:</label>
                                 <div class="input-group">
                                     <h:inputText value="#{productoControlador.producto.precio}" id="precio" class="form-control"></h:inputText>
                                 </div>
                             </div>
-                            <div class="col-md-4 mb-4">
-                                <label for="validationCustomUsername">estado</label>
-                                <div class="input-group">
-                                    <h:inputText value="#{productoControlador.producto.estado}" id="estado" class="form-control"></h:inputText>
-                                </div>
-                            </div>
                         </div>
-                        <div class="form-row">                            
-                            <div class="dropdown col-md-3 mb-3">
-                                <label for="validationCustom03">descipcion Arreglo</label>
-                                <br />
-                                <h:selectOneMenu class="btn btn-secondary dropdown-toggle" value="#{productoControlador.ordenProduccion.idOrdenDeProduccion}">
-                                    <f:selectItems class="dropdown-item" value="#{ordenProduccionControlador.consultarOrdenProduccion()}" var="ordenProduccion" itemValue="#{ordenProduccion.idOrdenDeProduccion}" itemLabel="#{ordenProduccion.descipcionArreglo}"/>
-                                </h:selectOneMenu>
-                            </div>
-                            <div class="dropdown col-md-3 mb-3">
-                                <label for="validationCustom03">tiempo de cultivo</label>
-                                <br />
-                                <h:selectOneMenu class="btn btn-secondary dropdown-toggle" value="#{productoControlador.catalogo.idCatalogo}">
-                                    <f:selectItems class="dropdown-item" value="#{catalogoControlador.consultarCatalogo()}" var="catalogo" itemValue="#{catalogo.idCatalogo}" itemLabel="#{catalogo.tiempoDeCultivo}"/>
-                                </h:selectOneMenu>
-                            </div>
-                        </div>
-                        <h:commandButton action="#{productoControlador.editarProducto()}" class="btn boton-registro" type="submit" value="Editar producto"></h:commandButton>
+                        <h:commandButton action="#{productoControlador.editarProducto()}" class="btn boton-registro" type="submit" value="Crear producto"></h:commandButton>
                     </h:form>
                 </div>
             </div>
@@ -74,4 +70,3 @@
         <script src="../../js/formularios.js"></script>
     </h:body>
 </html>
-
