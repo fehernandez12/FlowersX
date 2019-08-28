@@ -58,6 +58,18 @@ public class SolicitudControlador implements Serializable {
     UsuarioFacade usuarioFacade;
     Usuario usuario = new Usuario();
 
+    private Part file;
+    private Part file1;
+    private Part file2;
+    private String nombre;
+    private String nombre1;
+    private String nombre2;
+    private String pathReal;
+    private String pathReal1;
+    private String pathReal2;
+    Mailer mailer = new Mailer();
+    SolicitudControlador solicitudControlador = new SolicitudControlador();
+
     public SolicitudControlador() {
     }
 
@@ -90,58 +102,101 @@ public class SolicitudControlador implements Serializable {
     }
 
     public String crearSolicitud() throws UnsupportedEncodingException {
-        String asunto;
+        String asunto = "Nueva solicitud de transporte";
+        String mensaje = "Se ha generado una nueva solicitud de transporte:\nPedido correspondiente: " + solicitud.getPedidoidPedido() + "\nSoporte(s) adjuntos.";
         solicitud.setPedidoidPedido(pedidoFacade.find(pedido.getIdPedido()));
         solicitud.setUsuarioid(usuarioFacade.find(usuario.getId()));
-        solicitud.setSoporte1(pathReal);
-        solicitud.setSoporte2(pathReal1);
-        solicitud.setSoporte3(pathReal2);
-        asunto = "Solicitud de transporte, pedido número " + solicitud.getPedidoidPedido();
-        //archivo.setUrl(pathReal);
-        solicitudFacade.create(solicitud);
-        final String user = "santamartaflowers@gmail.com";//cambiará en consecuencia al servidor utilizado
-        final String pass = "flowersx";
-        Properties props = new Properties();
-        props.setProperty("mail.transport.protocol", "smtp");
-        props.setProperty("mail.smtp.host", "smtp.gmail.com"); // envia 
-        props.setProperty("mail.smtp.starttls.enable", "true");
-        props.setProperty("mail.smtp.port", "587");
-        props.setProperty("mail.smtp.starttls.required", "false");
-        props.setProperty("mail.smtp.auth", "true");
-        props.setProperty("mail.smtp.ssl.trust", "smtp.gmail.com");
-
-        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(user, pass);
-            }
-        });
+        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("Archivos");
+        String path1 = "";
+        String path2 = "";
+        path = path.substring(0, path.indexOf("\\build"));
+        path = path + "\\web\\Archivos\\";
         try {
-            BodyPart adjunto = new MimeBodyPart();
-            adjunto.setDataHandler(new DataHandler(new FileDataSource(pathReal)));
-            adjunto.setFileName("Soporte 1");
-            BodyPart adjunto1 = new MimeBodyPart();
-            adjunto1.setDataHandler(new DataHandler(new FileDataSource(pathReal1)));
-            adjunto1.setFileName("Soporte 2");
-            BodyPart adjunto2 = new MimeBodyPart();
-            adjunto2.setDataHandler(new DataHandler(new FileDataSource(pathReal2)));
-            adjunto2.setFileName("Soporte 3");
-
-            MimeMultipart multiparte = new MimeMultipart();
-            multiparte.addBodyPart(adjunto);
-            multiparte.addBodyPart(adjunto1);
-            multiparte.addBodyPart(adjunto2);
-            MimeMessage message = new MimeMessage(session);
-            message.setFrom(new InternetAddress(user, ""));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(solicitud.getDestinatario()));
-            message.setSubject(solicitud.getDestinatario());
-            message.setContent(multiparte, "text/html; charset=utf-8");
-
-            //3rd paso)send message
-            Transport.send(message);
-        } catch (MessagingException e) {
-            throw new RuntimeException(e);
+            this.nombre = SolicitudControlador.randomAlphaNumeric(15);
+            pathReal = "/FlowersX/Archivos/" + nombre;
+            path = path + this.nombre;
+            InputStream in = file.getInputStream();
+            byte[] data = new byte[in.available()];
+            in.read(data);
+            FileOutputStream out = new FileOutputStream(new File(path));
+            out.write(data);
+            in.close();
+            out.close();
+            path.replace("\\", "\\\\");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        solicitud = new Solicitud();
+        if (file1 != null) {
+            path1 = FacesContext.getCurrentInstance().getExternalContext().getRealPath("Archivos");
+            path1 = path1.substring(0, path.indexOf("\\build"));
+            path1 = path1 + "\\web\\Archivos\\";
+            try {
+                this.nombre1 = SolicitudControlador.randomAlphaNumeric(15);
+                pathReal1 = "/FlowersX/Archivos/" + nombre1;
+                path1 = path1 + this.nombre1;
+                InputStream in = file.getInputStream();
+                byte[] data = new byte[in.available()];
+                in.read(data);
+                FileOutputStream out = new FileOutputStream(new File(path1));
+                out.write(data);
+                in.close();
+                out.close();
+                path.replace("\\", "\\\\");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (file2 != null) {
+            path2 = FacesContext.getCurrentInstance().getExternalContext().getRealPath("Archivos");
+            path2 = path2.substring(0, path.indexOf("\\build"));
+            path2 = path2 + "\\web\\Archivos\\";
+            try {
+                this.nombre2 = SolicitudControlador.randomAlphaNumeric(15);
+                pathReal2 = "/FlowersX/Archivos/" + nombre2;
+                path2 = path2 + this.nombre2;
+                InputStream in = file.getInputStream();
+                byte[] data = new byte[in.available()];
+                in.read(data);
+                FileOutputStream out = new FileOutputStream(new File(path2));
+                out.write(data);
+                in.close();
+                out.close();
+                path.replace("\\", "\\\\");
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (file1 == null && file2 == null) {
+            mailer.enviarMensajeConUnAdjunto(solicitud.getDestinatario(), asunto, mensaje, path, nombre);
+            solicitud.setSoporte1(pathReal);
+            solicitud.setSoporte2(pathReal1);
+            solicitud.setSoporte3(pathReal2);
+            solicitudFacade.create(solicitud);
+            solicitud = new Solicitud();
+        } else if (file1 != null && file2 == null) {
+            mailer.enviarMensajeConDosAdjuntos(solicitud.getDestinatario(), asunto, mensaje, path, nombre, path1, nombre1);
+            solicitud.setSoporte1(pathReal);
+            solicitud.setSoporte2(pathReal1);
+            solicitud.setSoporte3(pathReal2);
+            solicitudFacade.create(solicitud);
+            solicitud = new Solicitud();
+        } else if (file1 == null && file2 != null) {
+            mailer.enviarMensajeConDosAdjuntos(solicitud.getDestinatario(), asunto, mensaje, path, nombre, path2, nombre2);
+            solicitud.setSoporte1(pathReal);
+            solicitud.setSoporte2(pathReal1);
+            solicitud.setSoporte3(pathReal2);
+            solicitudFacade.create(solicitud);
+            solicitud = new Solicitud();
+        } else if (file1 != null && file2 != null) {
+            mailer.enviarMensajeConTresAdjuntos(solicitud.getDestinatario(), asunto, mensaje, path, nombre, path1, nombre1, path2, nombre2);
+            solicitud.setSoporte1(pathReal);
+            solicitud.setSoporte2(pathReal1);
+            solicitud.setSoporte3(pathReal2);
+            solicitudFacade.create(solicitud);
+            solicitud = new Solicitud();
+        }
         return "gestionar-solicitudes.xhtml";
     }
 
@@ -167,14 +222,6 @@ public class SolicitudControlador implements Serializable {
     public void setListaSolicitudes(List<Solicitud> listaSolicitudes) {
         this.listaSolicitudes = listaSolicitudes;
     }
-
-    private Part file;
-    private Part file1;
-    private Part file2;
-    private String nombre;
-    private String pathReal;
-    private String pathReal1;
-    private String pathReal2;
 
     public String getPath() {
         return pathReal;
@@ -216,70 +263,20 @@ public class SolicitudControlador implements Serializable {
         this.file2 = file2;
     }
 
-    public void upload(String tabla, Part file) {
-        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("Archivos");
-        path = path.substring(0, path.indexOf("\\build"));
-        path = path + "\\web\\Archivos\\";
-        try {
-            this.nombre = SolicitudControlador.randomAlphaNumeric(15);
-            pathReal = "/UploadFile/Archivos/" + nombre;
-            path = path + this.nombre;
-            InputStream in = file.getInputStream();
-            byte[] data = new byte[in.available()];
-            in.read(data);
-            FileOutputStream out = new FileOutputStream(new File(path));
-            out.write(data);
-            in.close();
-            out.close();
-            path.replace("\\", "\\\\");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public String getNombre1() {
+        return nombre1;
     }
 
-    public void upload1(String tabla, Part file1) {
-        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("Archivos");
-        path = path.substring(0, path.indexOf("\\build"));
-        path = path + "\\web\\Archivos\\";
-        try {
-            this.nombre = SolicitudControlador.randomAlphaNumeric(15);
-            pathReal1 = "/UploadFile/Archivos/" + nombre;
-            path = path + this.nombre;
-            InputStream in = file.getInputStream();
-            byte[] data = new byte[in.available()];
-            in.read(data);
-            FileOutputStream out = new FileOutputStream(new File(path));
-            out.write(data);
-            in.close();
-            out.close();
-            path.replace("\\", "\\\\");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void setNombre1(String nombre1) {
+        this.nombre1 = nombre1;
     }
 
-    public void upload2(String tabla, Part file2) {
-        String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("Archivos");
-        path = path.substring(0, path.indexOf("\\build"));
-        path = path + "\\web\\Archivos\\";
-        try {
-            this.nombre = SolicitudControlador.randomAlphaNumeric(15);
-            pathReal2 = "/UploadFile/Archivos/" + nombre;
-            path = path + this.nombre;
-            InputStream in = file.getInputStream();
-            byte[] data = new byte[in.available()];
-            in.read(data);
-            FileOutputStream out = new FileOutputStream(new File(path));
-            out.write(data);
-            in.close();
-            out.close();
-            path.replace("\\", "\\\\");
+    public String getNombre2() {
+        return nombre2;
+    }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void setNombre2(String nombre2) {
+        this.nombre2 = nombre2;
     }
 
     private static final String ALPHA_NUMERIC_STRING = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

@@ -22,18 +22,21 @@ import javax.mail.internet.MimeMultipart;
  * @author Aprendiz
  */
 public class Mailer {
+    Session session;
+    //Credenciales de la cuenta de correo
+    final String user = "santamartaflowers@gmail.com";//cambiará en consecuencia al servidor utilizado
+    final String pass = "flowersx";
 
-    public static void send(String para, String sujeto, String mensaje) throws UnsupportedEncodingException {
+    public Mailer(Session session) {
+        this.session = session;
+    }
 
-        final String user = "santamartaflowers@gmail.com";//cambiará en consecuencia al servidor utilizado
-        final String pass = "flowersx";
-        String nuevoMensaje = "<h1 style=\"font-size: 20px; color:#0C0; font-weight: bold; text-transform: uppercase ; \">Correo de Prueba" + "</h1>" + "<img src='https://lh3.googleusercontent.com/-oO-7N-Wpc3Q/AAAAAAAAAAI/AAAAAAAAAAw/fycSKvFah3c/s125-c-k-no/photo.jpg'/ style=\"float: left;\"><p>" + mensaje + "<br>\n"
-                + "<p style=\"text-align: center; color: #307EDF\">\n"
-                + "</p> \n"
-                + "<br>\n"
-                + "<p style=\"color:#0C0;font-weight: bold;\" > Gracias por formar parte de nuestra comunidad. </p> ";
-//1st paso) Obtener el objeto de sesión
+    Mailer() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
+    public void configurar() {
+        //Configurar el servidor de correo
         Properties props = new Properties();
         props.setProperty("mail.transport.protocol", "smtp");
         props.setProperty("mail.smtp.host", "smtp.gmail.com"); // envia 
@@ -42,29 +45,62 @@ public class Mailer {
         props.setProperty("mail.smtp.starttls.required", "false");
         props.setProperty("mail.smtp.auth", "true");
         props.setProperty("mail.smtp.ssl.trust", "smtp.gmail.com");
-
-        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+        //Obtener el objeto de sesión
+        this.session = Session.getInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(user, pass);
             }
         });
+    }
 
-//2nd paso)compose message
-        try {
-            //Archivos adjuntos
+    public void enviarMensaje(String destinatario, String asunto, String mensaje) throws UnsupportedEncodingException {
+        //Estructura del mensaje en HTML
+        String nuevoMensaje = "<h1 style=\"font-size: 20px; color:#0C0; font-weight: bold; text-transform: uppercase ; \">FlowersX - Mensaje del administrador" + "</h1>" + "<img src=\"https://i.imgur.com/2seKBWE.png\"/ style=\"float: left;\"><p>" + mensaje + "<br>\n"
+                + "<p style=\"text-align: center; color: #222222\">\n"
+                + "</p> \n"
+                + "<br>\n"
+                + "<p style=\"color:#0C0;font-weight: bold;\" > Gracias por creer en nosotros. </p> ";
+         try {
+            //Configurar mensaje
             BodyPart texto = new MimeBodyPart();
             texto.setContent(nuevoMensaje, "text/html");
-            //BodyPart adjunto = new MimeBodyPart();
-            //adjunto.setDataHandler(new DataHandler(new FileDataSource("d:/cartagena.txt")));
-            //adjunto.setFileName("cartagena.txt");
-
             MimeMultipart multiparte = new MimeMultipart();
             multiparte.addBodyPart(texto);
-            //multiparte.addBodyPart(adjunto);
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(user, ""));
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(para));
-            message.setSubject(sujeto);
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
+            message.setSubject(asunto);
+            message.setContent(multiparte, "text/html; charset=utf-8");
+            //Enviar mensaje
+            Transport.send(message);
+            System.out.println("Enviado");
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void enviarMensajeConUnAdjunto(String destinatario, String asunto, String mensaje, String ruta, String nombre) throws UnsupportedEncodingException {
+        //Estructura del mensaje
+        String nuevoMensaje = "<h1 style=\"font-size: 20px; color:#0C0; font-weight: bold; text-transform: uppercase ; \">FlowersX - " + asunto + "</h1>" + "<img src=\"https://i.imgur.com/2seKBWE.png\"/ style=\"float: left;\"><br>\n"
+                + "<p style=\"text-align: center; color: #222222\">\n"
+                + "</p> \n"
+                + "<br>\n"
+                + "<p style=\"color:#0C0;font-weight: bold;\" > Gracias por creer en nosotros. </p> ";
+         try {
+            //Configurar mensaje
+            BodyPart texto = new MimeBodyPart();
+            texto.setContent(nuevoMensaje, "text/html");
+            //Configurar adjunto
+            BodyPart adjunto = new MimeBodyPart();
+            adjunto.setDataHandler(new DataHandler(new FileDataSource(ruta)));
+            adjunto.setFileName(nombre);
+            MimeMultipart multiparte = new MimeMultipart();
+            multiparte.addBodyPart(texto);
+            multiparte.addBodyPart(adjunto);
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(user, ""));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
+            message.setSubject(asunto);
             message.setContent(multiparte, "text/html; charset=utf-8");
 
             //3rd paso)send message
@@ -75,7 +111,84 @@ public class Mailer {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
-
     }
+    public void enviarMensajeConDosAdjuntos(String destinatario, String asunto, String mensaje, String ruta, String nombre, String ruta1, String nombre1) throws UnsupportedEncodingException {
+        //Estructura del mensaje
+        String nuevoMensaje = "<h1 style=\"font-size: 20px; color:#0C0; font-weight: bold; text-transform: uppercase ; \">FlowersX - " + asunto + "</h1>" + "<img src=\"https://i.imgur.com/2seKBWE.png\"/ style=\"float: left;\"><br>\n"
+                + "<p style=\"text-align: center; color: #222222\">\n"
+                + "</p> \n"
+                + "<br>\n"
+                + "<p style=\"color:#0C0;font-weight: bold;\" > Gracias por creer en nosotros. </p> ";
+         try {
+            //Configurar mensaje
+            BodyPart texto = new MimeBodyPart();
+            texto.setContent(nuevoMensaje, "text/html");
+            //Configurar adjunto
+            BodyPart adjunto = new MimeBodyPart();
+            adjunto.setDataHandler(new DataHandler(new FileDataSource(ruta)));
+            adjunto.setFileName(nombre);
+            BodyPart adjunto1 = new MimeBodyPart();
+            adjunto1.setDataHandler(new DataHandler(new FileDataSource(ruta1)));
+            adjunto1.setFileName(nombre1);
+            MimeMultipart multiparte = new MimeMultipart();
+            multiparte.addBodyPart(texto);
+            multiparte.addBodyPart(adjunto);
+            multiparte.addBodyPart(adjunto1);
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(user, ""));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
+            message.setSubject(asunto);
+            message.setContent(multiparte, "text/html; charset=utf-8");
 
+            //3rd paso)send message
+            Transport.send(message);
+
+            System.out.println("Enviado");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    
+    public void enviarMensajeConTresAdjuntos(String destinatario, String asunto, String mensaje, String ruta, String nombre, String ruta1, String nombre1, String ruta2, String nombre2) throws UnsupportedEncodingException {
+        //Estructura del mensaje
+        String nuevoMensaje = "<h1 style=\"font-size: 20px; color:#0C0; font-weight: bold; text-transform: uppercase ; \">FlowersX - " + asunto + "</h1>" + "<img src=\"https://i.imgur.com/2seKBWE.png\"/ style=\"float: left;\"><br>\n"
+                + "<p style=\"text-align: center; color: #222222\">\n"
+                + "</p> \n"
+                + "<br>\n"
+                + "<p style=\"color:#0C0;font-weight: bold;\" > Gracias por creer en nosotros. </p> ";
+         try {
+            //Configurar mensaje
+            BodyPart texto = new MimeBodyPart();
+            texto.setContent(nuevoMensaje, "text/html");
+            //Configurar adjunto
+            BodyPart adjunto = new MimeBodyPart();
+            adjunto.setDataHandler(new DataHandler(new FileDataSource(ruta)));
+            adjunto.setFileName(nombre);
+            BodyPart adjunto1 = new MimeBodyPart();
+            adjunto1.setDataHandler(new DataHandler(new FileDataSource(ruta1)));
+            adjunto1.setFileName(nombre1);
+            BodyPart adjunto2 = new MimeBodyPart();
+            adjunto2.setDataHandler(new DataHandler(new FileDataSource(ruta2)));
+            adjunto2.setFileName(nombre2);
+            MimeMultipart multiparte = new MimeMultipart();
+            multiparte.addBodyPart(texto);
+            multiparte.addBodyPart(adjunto);
+            multiparte.addBodyPart(adjunto1);
+            multiparte.addBodyPart(adjunto2);
+            MimeMessage message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(user, ""));
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(destinatario));
+            message.setSubject(asunto);
+            message.setContent(multiparte, "text/html; charset=utf-8");
+
+            //3rd paso)send message
+            Transport.send(message);
+
+            System.out.println("Enviado");
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

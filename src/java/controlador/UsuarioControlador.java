@@ -17,9 +17,11 @@ import facade.UsuarioFacade;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.Part;
 
 /**
  *
@@ -49,6 +51,18 @@ public class UsuarioControlador implements Serializable {
     @EJB
     CiudadFacade ciudadFacade;
     Ciudad ciudad = new Ciudad();
+    @EJB
+    private Part file;
+    
+    Mailer mailer = new Mailer();
+
+    public Part getFile() {
+        return file;
+    }
+
+    public void setFile(Part file) {
+        this.file = file;
+    }
 
     public Usuario getUsuarioLogueado() {
         return usuarioLogueado;
@@ -96,11 +110,14 @@ public class UsuarioControlador implements Serializable {
         return usuarioFacade.findAll();
     }
 
-    public String crearUsuario() {
+    public String crearUsuario() throws UnsupportedEncodingException {
         usuario.setRolidRol(rolFacade.find(rol.getIdRol()));
         usuario.setPaisIdpais(paisFacade.find(pais.getIdpais()));
         usuario.setCiudadIdciudad(ciudadFacade.find(ciudad.getIdciudad()));
+        String mensaje = "Ha sido registrado en FlowersX exitosamente.\nSus credenciales de acceso son:\nCorreo: " + usuario.getEmail() + "\nPassword: " + usuario.getPassword();
         usuarioFacade.create(usuario);
+        mailer.configurar();
+        mailer.enviarMensaje(usuario.getEmail(), "Registro en FlowersX - Santa Marta Flowers S.A.S.", mensaje);
         usuario = new Usuario();
         return "gestionar-usuarios";
     }
